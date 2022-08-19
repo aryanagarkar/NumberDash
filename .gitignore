@@ -1,6 +1,7 @@
-./Library/
-./Logs/
-./Packages/
-./ProjectSettings/
-./Temp/
-./UserSettings/
+Library/
+Logs/
+Packages/
+ProjectSettings/
+Temp/
+UserSettings/
+Build/
