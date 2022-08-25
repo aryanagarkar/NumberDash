@@ -7,13 +7,28 @@ public class MainGame : MonoBehaviour
 {
     GameObject gameOverCanvas;
     GameObject mainCanvas;
-     GameObject instructionPage;
+    GameObject instructionPage;
+    Timer gameOverDelay;
+
+    string gameOverText;
+    AudioClipName gameOverClipName;
 
     void Start()
     {
         gameOverCanvas = Resources.Load<GameObject>("Prefabs/Canvases/GameOver");
         mainCanvas = Resources.Load<GameObject>("Prefabs/MainCanvas");
         instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
+        gameOverDelay = gameObject.AddComponent<Timer>();
+        gameOverDelay.Duration = 1;
+    }
+
+    public void Update(){
+         if (gameOverDelay.Finished)
+        {
+            Instantiate(gameOverCanvas, GameObject.FindWithTag("MainCanvas").transform);
+            GameObject.FindWithTag("GameOverCanvas").GetComponent<GameOverCanvas>().updateTextandPlaySound(gameOverText, gameOverClipName);
+            gameOverDelay.Stop();
+        }
     }
 
 
@@ -34,20 +49,17 @@ public class MainGame : MonoBehaviour
     }
 
     public void gameOver(Player lastPlayer, GameStatus gameStatus){
-        string gameOverText = "";
-        AudioClipName name = AudioClipName.None;
         if (gameStatus == GameStatus.tied) {
-            name = AudioClipName.Tied;
+            gameOverClipName = AudioClipName.Tied;
             gameOverText = "It was a tie!";
         } else if(lastPlayer == Player.You) {
-            name = AudioClipName.PlayerLost;
+            gameOverClipName = AudioClipName.PlayerLost;
             gameOverText = lastPlayer.ToString() + " lost! Better Luck Next Time.";
         } else {
-            name = AudioClipName.PlayerWon;
+            gameOverClipName = AudioClipName.PlayerWon;
             gameOverText = Player.You.ToString() + " won! Great Job.";
         }
-        Instantiate(gameOverCanvas, GameObject.FindWithTag("MainCanvas").transform);
-        GameObject.FindWithTag("GameOverCanvas").GetComponent<GameOverCanvas>().updateTextandPlaySound(gameOverText, name);
+        gameOverDelay.Run();
     }
 }
 

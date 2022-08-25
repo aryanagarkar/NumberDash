@@ -48,6 +48,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!hasSprite) {
             Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
             SetSprite(s);
+            Tile.openTile = gameObject;
         }
     }
 
@@ -59,6 +60,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!hasSprite) {
             Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
             SetSprite(s);
+            Tile.openTile = gameObject;
         }
         siblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
@@ -76,7 +78,6 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         name = name.Replace("Tile", "");
         number = int.Parse(name);
         hasSprite = true;
-        Tile.openTile = gameObject;
     }
 
     public void OnDrag(PointerEventData eventData){

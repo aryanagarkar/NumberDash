@@ -8,15 +8,15 @@ using TMPro;
 public class TurnManager : MonoBehaviour
 {
     public static Player currentPlayer;
-   // GameObject turnText;
-   /// Animator turnTextAnimator;
-    //TextMeshProUGUI textComponent;
+    GameObject turnText;
+    Animator turnTextAnimator;
+    TextMeshProUGUI textComponent;
     Image characterImage;
+    TextMeshProUGUI characterText;
     Image playerImage;
     Animator characterAnimator;
     Animator playerAnimator;
-    //Timer turnTextdelay;
-    //Timer displayTurnText;
+    Timer initialComputerTurnDelay;
 
     Sprite character;
     string characterName;
@@ -25,18 +25,16 @@ public class TurnManager : MonoBehaviour
         get {return currentPlayer;}
     }
 
-    void Start(){
-        //turnText = GameObject.FindWithTag("TurnText");
+    void Awake(){
+        turnText = GameObject.FindWithTag("TurnText");
         characterImage = GameObject.FindWithTag("Character").GetComponent<Image>();
         playerImage = GameObject.FindWithTag("Player").GetComponent<Image>();
         characterAnimator = GameObject.FindWithTag("Character").GetComponent<Animator>();
         playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
-        //turnTextAnimator = turnText.GetComponent<Animator>();
-       /* turnTextdelay = gameObject.AddComponent<Timer>();
-        turnTextdelay.Duration = 1;
-        displayTurnText = gameObject.AddComponent<Timer>();
-        displayTurnText.Duration = 1;
-        */
+        turnTextAnimator = turnText.GetComponent<Animator>();
+        characterText = GameObject.FindWithTag("Character").transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        initialComputerTurnDelay = gameObject.AddComponent<Timer>();
+        initialComputerTurnDelay.Duration = 2;
 
         if(Character.CharacterToPlayWith != null){
             character = Character.CharacterToPlayWith;
@@ -46,73 +44,59 @@ public class TurnManager : MonoBehaviour
             characterName = Character.CharacterName;
         }
 
-        currentPlayer = Player.You;
+        int currentPlayerIndex = Random.Range(1, 10) % 2;
+        currentPlayer = (Player)currentPlayerIndex;
 
-        //textComponent = turnText.GetComponent<TextMeshProUGUI>();
-       // textComponent.enabled = true;
-     //   turnTextAnimator.Play("TurnText", -1, 0f);
-        //textComponent.text = "Your Turn";
-        //displayTurnText.Run();
+        textComponent = turnText.GetComponent<TextMeshProUGUI>();
+        turnTextAnimator.enabled = true;
+        if (currentPlayer == Player.You) {
+            textComponent.text = "You Play First!";
+        } else {
+            textComponent.text = characterName + " Plays First";
+        }
+        turnTextAnimator.Play("TurnText", 0, 0f);
+        
         characterImage.enabled = true;
+        characterText.text = characterName;
         characterImage.sprite = character;
         playerImage.enabled = true;
-        playerAnimator.enabled = true;
-        playerAnimator.Play("character", 0, 0f);
+        initialComputerTurnDelay.Run();
     }
 
 
-   /* public void Update(){
-         if (turnTextdelay.Finished)
+   public void Update(){
+         if (initialComputerTurnDelay.Finished)
         {
-            ChangeText(currentPlayer);
-            turnTextdelay.Stop();
-            displayTurnText.Run();
+            PlayTurn();
+            initialComputerTurnDelay.Stop();
         }
-        if (displayTurnText.Finished)
-        {
-            textComponent.enabled = false;
-            displayTurnText.Stop();
-        }
-    } */
+    } 
 
     public void finishGame() {
         playerAnimator.enabled = false;
         characterAnimator.enabled = false;
     }
 
-    public void ChangeTurn(){
-        if (currentPlayer == Player.Computer) {
-            currentPlayer = Player.You;
-          //  turnTextdelay.Run();
+    private void PlayTurn(){
+         if (currentPlayer == Player.You) {
             characterAnimator.enabled = false;
             playerAnimator.enabled = true;
             playerAnimator.Play("character", 0, 0f);
             
         }else {
-            currentPlayer = Player.Computer;
-            //turnTextdelay.Run();
             characterAnimator.Play("character", 0, 0f);
             playerAnimator.enabled = false;
             characterAnimator.enabled = true;
-            //characterImage.enabled = true;
-            //characterImage.sprite = character;
             GetComponent<GameBoard>().PlayComputersTurn();
         }
     }
 
-    /*private void ChangeText(Player name){
-        //textComponent.enabled = true;
-        string text = "";
-        switch (name)
-        {
-            case Player.You :
-            text = "Your Turn";
-            break;
-            case Player.Computer :
-            text = characterName + "'s Turn";
-            break;
+    public void ChangeTurn(){
+        if (currentPlayer == Player.Computer) {
+            currentPlayer = Player.You;
+        }else {
+            currentPlayer = Player.Computer;
         }
-        textComponent = GameObject.FindWithTag("TurnText").GetComponent<TextMeshProUGUI>();
-        textComponent.text = text;
-    }*/
+        PlayTurn();
+    }
 }

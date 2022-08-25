@@ -12,8 +12,11 @@ public class GameStartCanvas : MonoBehaviour
 
    public static Level level;
 
-   public void Start(){
+   public void Awake(){
       LoadPlayerPrefValues();
+   }
+
+   public void Start(){
     characterPanel = Resources.Load<GameObject>("Prefabs/Canvases/CharacterPanel");
     levelPanel = Resources.Load<GameObject>("Prefabs/Canvases/LevelPanel");
     instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");

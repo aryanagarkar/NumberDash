@@ -10,7 +10,7 @@ public class MainCanvas : MonoBehaviour
     GameObject numberGrid;
     Sprite blankSprite;
 
-    void Start()
+    void Awake()
     { 
         numberGrid = GameObject.FindWithTag("NumberGrid");
         blankSprite = Resources.Load<Sprite>("Sprites/BlankTileSprite");
@@ -40,7 +40,7 @@ public class MainCanvas : MonoBehaviour
     }
 
     public Sprite PickRandomSprite(){
-        int index = Random.Range(0, numbers.Count);
+        int index = Random.Range(0, numbers.Count - 1);
         Sprite s = numbers[index];
         numbers.Remove(s);  
         return s;

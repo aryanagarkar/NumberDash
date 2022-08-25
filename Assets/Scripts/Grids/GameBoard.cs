@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class GameBoard : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameBoard : MonoBehaviour
     Level selectedLevel;
 
 
-    void Start()
+    void Awake()
     {
         emptySlots = new Dictionary<string, GameObject>();
         occupiedSlots = new Dictionary<string, GameObject>();
@@ -104,19 +105,21 @@ public class GameBoard : MonoBehaviour
     }
 
     private void highlightLatestPlayedTile(GameObject latestTile) {
-        // Change the Tile Image Sprite to Highlighted One
+        /* Change the Tile Image Sprite to Highlighted One
         string highlightedSpriteName = latestTile.GetComponent<Image>().sprite.name + "H";
         if (transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName) != null) {
             latestTile.GetComponent<Image>().sprite = transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName);
-
+*/
             // Reset the sprite for the last dropped tile back to normal
+            latestTile.GetComponent<NicerOutline>().enabled = true;
             if(lastDroppedTile != null) {
-                string spritename = lastDroppedTile.GetComponent<Image>().sprite.name.Replace("H", "");
-                lastDroppedTile.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + spritename);
+                //string spritename = lastDroppedTile.GetComponent<Image>().sprite.name.Replace("H", "");
+                //lastDroppedTile.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + spritename);
+                lastDroppedTile.GetComponent<NicerOutline>().enabled = false;
             }
 
             // Update the lastDroppedTile 
             lastDroppedTile = latestTile;
-        }
+        //}
     }
 }
