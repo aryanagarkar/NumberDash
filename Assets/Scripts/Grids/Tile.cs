@@ -13,6 +13,8 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     Transform startParent;
     int siblingIndex;
 
+    Animator tileFlip;
+
     // A sprite is assigned to a tile when it is clicked and this flag is set to true
     // If the dragged tile is not dropped in a valid slot, this flag is reset.
     bool hasSprite = false;
@@ -40,12 +42,25 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    void Start(){
+        tileFlip = GetComponent<Animator>();
+    }
+
+
+    bool AnimatorIsPlaying(){
+        return tileFlip.GetCurrentAnimatorStateInfo(0).length >
+                tileFlip.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         if(!IsMovable()) {
             return;
         }
         if(!hasSprite) {
+            tileFlip.enabled = true;
+            tileFlip.Play("TileFlip", 0, 0f);
+            SoundManager.PlayClipByName(AudioClipName.Swoosh);
             Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
             SetSprite(s);
             Tile.openTile = gameObject;
@@ -53,15 +68,10 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
     public void OnBeginDrag(PointerEventData eventData){
-        if(!IsMovable()) {
+        if(!IsMovable() || !hasSprite) {
             return;
            }
         dragStarted = true;
-        if(!hasSprite) {
-            Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
-            SetSprite(s);
-            Tile.openTile = gameObject;
-        }
         siblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
     

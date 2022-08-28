@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
         clips.Add(AudioClipName.Tied, Resources.Load<AudioClip>("Audio/Tied"));
         clips.Add(AudioClipName.TilePlaced, Resources.Load<AudioClip>("Audio/TilePlaced"));
         clips.Add(AudioClipName.ButtonClick, Resources.Load<AudioClip>("Audio/ButtonClick"));
+         clips.Add(AudioClipName.Swoosh, Resources.Load<AudioClip>("Audio/Swoosh"));
     }
 
     public static void PlayClipByName(AudioClipName name){

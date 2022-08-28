@@ -5,5 +5,6 @@ public enum AudioClipName
     PlayerWon,
     Tied,
     TilePlaced,
-    ButtonClick
+    ButtonClick,
+    Swoosh
 }

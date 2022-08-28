@@ -70,6 +70,9 @@ public class GameBoard : MonoBehaviour
     public void PlayComputersTurn() {
         Sprite s = transform.parent.GetComponent<MainCanvas>().PickRandomSprite();
         computersTileToPlace = transform.parent.GetComponent<MainCanvas>().GetTileToPlay();
+        computersTileToPlace.GetComponent<Animator>().enabled = true;
+        computersTileToPlace.GetComponent<Animator>().Play("TileFlip", 0, 0f);
+        SoundManager.PlayClipByName(AudioClipName.Swoosh);
         computersTileToPlace.GetComponent<Tile>().SetSprite(s);
         int lower = 9 % (NumberGrid.GetRemainingTilesCount());
         int duration = Random.Range(lower+1, lower+3);
