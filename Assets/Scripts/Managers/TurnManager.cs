@@ -10,16 +10,14 @@ public class TurnManager : MonoBehaviour
     public static PlayerStatus currentPlayer;
     GameObject turnText;
     GameObject character;
-    GameObject player;
     Animator turnTextAnimator;
     TextMeshProUGUI textComponent;
     Image characterImage;
     TextMeshProUGUI characterText;
-    Image playerImage;
-    TextMeshProUGUI playerText;
-    Animator characterAnimator;
-    Animator playerAnimator;
+    //Animator characterAnimator;
     Timer initialComputerTurnDelay;
+    GameObject clock;
+    Animator clockAnim;
 
     Sprite characterSprite;
     string characterName;
@@ -33,14 +31,12 @@ public class TurnManager : MonoBehaviour
     void Awake(){
         turnText = GameObject.FindWithTag("TurnText");
         character = GameObject.FindWithTag("Character");
-        player = GameObject.FindWithTag("Player");
         characterImage = character.GetComponent<Image>();
-        playerImage = player.GetComponent<Image>();
-        characterAnimator = character.GetComponent<Animator>();
-        playerAnimator = player.GetComponent<Animator>();
+        //characterAnimator = character.GetComponent<Animator>();
         turnTextAnimator = turnText.GetComponent<Animator>();
         characterText = character.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        playerText = player.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        clock = character.transform.GetChild(1).gameObject;
+        clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
         initialComputerTurnDelay = gameObject.AddComponent<Timer>();
         initialComputerTurnDelay.Duration = 2;
 
@@ -57,21 +53,24 @@ public class TurnManager : MonoBehaviour
         int currentPlayerIndex = Random.Range(1, 10) % 2;
         currentPlayer = (PlayerStatus)currentPlayerIndex;
 
+        characterImage.enabled = true;
+
         textComponent = turnText.GetComponent<TextMeshProUGUI>();
         turnTextAnimator.enabled = true;
         if (currentPlayer == PlayerStatus.You) {
             textComponent.text = "You Play First!";
+            characterText.text = "You";
+            characterImage.sprite = playerSprite;
         } else {
+            clock.SetActive(true);
+            clockAnim.enabled = true;
+            clockAnim.Play("Clock", 0, 0f);
             textComponent.text = characterName + " Plays First";
+            characterText.text = characterName;
+            characterImage.sprite = characterSprite;
         }
         turnTextAnimator.Play("TurnText", 0, 0f);
         
-        characterImage.enabled = true;
-        characterText.text = characterName;
-        playerText.text = "You";
-        characterImage.sprite = characterSprite;
-        playerImage.enabled = true;
-        playerImage.sprite = playerSprite; 
         initialComputerTurnDelay.Run();
     }
 
@@ -85,22 +84,26 @@ public class TurnManager : MonoBehaviour
     } 
 
     public void finishGame() {
-        playerAnimator.enabled = false;
-        characterAnimator.enabled = false;
-        character.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        player.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        //characterAnimator.enabled = false;
+        //character.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 
     private void PlayTurn(){
          if (currentPlayer == PlayerStatus.You) {
-            characterAnimator.enabled = false;
-            playerAnimator.enabled = true;
-            playerAnimator.Play("character", 0, 0f);
+            clock.SetActive(false);
+            clockAnim.enabled = false;
+            //characterAnimator.enabled = true;
+            //characterAnimator.Play("character", 0, 0f);
+            characterImage.sprite = playerSprite;
+            characterText.text = "You";
             
         }else {
-            characterAnimator.Play("character", 0, 0f);
-            playerAnimator.enabled = false;
-            characterAnimator.enabled = true;
+            //characterAnimator.Play("character", 0, 0f);
+            clock.SetActive(true);
+            clockAnim.enabled = true;
+            clockAnim.Play("Clock", 0, 0f);
+            characterImage.sprite = characterSprite;
+            characterText.text = characterName;
             GetComponent<GameBoard>().PlayComputersTurn();
         }
     }
