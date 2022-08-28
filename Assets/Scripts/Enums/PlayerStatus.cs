@@ -1,4 +1,4 @@
-public enum Player
+public enum PlayerStatus
 {
     Computer,
     You

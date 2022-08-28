@@ -31,7 +31,6 @@ public class MainGame : MonoBehaviour
         }
     }
 
-
     public void playAgain(){
          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -45,19 +44,20 @@ public class MainGame : MonoBehaviour
     }
 
      public void quit(){
+
        Application.Quit();
     }
 
-    public void gameOver(Player lastPlayer, GameStatus gameStatus){
+    public void gameOver(PlayerStatus lastPlayer, GameStatus gameStatus){
         if (gameStatus == GameStatus.tied) {
             gameOverClipName = AudioClipName.Tied;
             gameOverText = "It was a tie!";
-        } else if(lastPlayer == Player.You) {
+        } else if(lastPlayer == PlayerStatus.You) {
             gameOverClipName = AudioClipName.PlayerLost;
             gameOverText = lastPlayer.ToString() + " lost! Better Luck Next Time.";
         } else {
             gameOverClipName = AudioClipName.PlayerWon;
-            gameOverText = Player.You.ToString() + " won! Great Job.";
+            gameOverText = PlayerStatus.You.ToString() + " won! Great Job.";
         }
         gameOverDelay.Run();
     }

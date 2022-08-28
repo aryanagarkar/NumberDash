@@ -7,49 +7,59 @@ using TMPro;
 
 public class TurnManager : MonoBehaviour
 {
-    public static Player currentPlayer;
+    public static PlayerStatus currentPlayer;
     GameObject turnText;
+    GameObject character;
+    GameObject player;
     Animator turnTextAnimator;
     TextMeshProUGUI textComponent;
     Image characterImage;
     TextMeshProUGUI characterText;
     Image playerImage;
+    TextMeshProUGUI playerText;
     Animator characterAnimator;
     Animator playerAnimator;
     Timer initialComputerTurnDelay;
 
-    Sprite character;
+    Sprite characterSprite;
     string characterName;
 
-    public Player CurrentPlayer {
+    Sprite playerSprite;
+
+    public PlayerStatus CurrentPlayer {
         get {return currentPlayer;}
     }
 
     void Awake(){
         turnText = GameObject.FindWithTag("TurnText");
-        characterImage = GameObject.FindWithTag("Character").GetComponent<Image>();
-        playerImage = GameObject.FindWithTag("Player").GetComponent<Image>();
-        characterAnimator = GameObject.FindWithTag("Character").GetComponent<Animator>();
-        playerAnimator = GameObject.FindWithTag("Player").GetComponent<Animator>();
+        character = GameObject.FindWithTag("Character");
+        player = GameObject.FindWithTag("Player");
+        characterImage = character.GetComponent<Image>();
+        playerImage = player.GetComponent<Image>();
+        characterAnimator = character.GetComponent<Animator>();
+        playerAnimator = player.GetComponent<Animator>();
         turnTextAnimator = turnText.GetComponent<Animator>();
-        characterText = GameObject.FindWithTag("Character").transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        characterText = character.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        playerText = player.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         initialComputerTurnDelay = gameObject.AddComponent<Timer>();
         initialComputerTurnDelay.Duration = 2;
 
-        if(Character.CharacterToPlayWith != null){
-            character = Character.CharacterToPlayWith;
+        if(Opponent.CharacterToPlayWith != null){
+            characterSprite = Opponent.CharacterToPlayWith;
         }
 
-        if(Character.CharacterName != null){
-            characterName = Character.CharacterName;
+        if(Opponent.CharacterName != null){
+            characterName = Opponent.CharacterName;
         }
+        
+        playerSprite = Player.PlayerCharacter;      
 
         int currentPlayerIndex = Random.Range(1, 10) % 2;
-        currentPlayer = (Player)currentPlayerIndex;
+        currentPlayer = (PlayerStatus)currentPlayerIndex;
 
         textComponent = turnText.GetComponent<TextMeshProUGUI>();
         turnTextAnimator.enabled = true;
-        if (currentPlayer == Player.You) {
+        if (currentPlayer == PlayerStatus.You) {
             textComponent.text = "You Play First!";
         } else {
             textComponent.text = characterName + " Plays First";
@@ -58,8 +68,10 @@ public class TurnManager : MonoBehaviour
         
         characterImage.enabled = true;
         characterText.text = characterName;
-        characterImage.sprite = character;
+        playerText.text = "You";
+        characterImage.sprite = characterSprite;
         playerImage.enabled = true;
+        playerImage.sprite = playerSprite; 
         initialComputerTurnDelay.Run();
     }
 
@@ -75,10 +87,12 @@ public class TurnManager : MonoBehaviour
     public void finishGame() {
         playerAnimator.enabled = false;
         characterAnimator.enabled = false;
+        character.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        player.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
     }
 
     private void PlayTurn(){
-         if (currentPlayer == Player.You) {
+         if (currentPlayer == PlayerStatus.You) {
             characterAnimator.enabled = false;
             playerAnimator.enabled = true;
             playerAnimator.Play("character", 0, 0f);
@@ -92,10 +106,10 @@ public class TurnManager : MonoBehaviour
     }
 
     public void ChangeTurn(){
-        if (currentPlayer == Player.Computer) {
-            currentPlayer = Player.You;
+        if (currentPlayer == PlayerStatus.Computer) {
+            currentPlayer = PlayerStatus.You;
         }else {
-            currentPlayer = Player.Computer;
+            currentPlayer = PlayerStatus.Computer;
         }
         PlayTurn();
     }

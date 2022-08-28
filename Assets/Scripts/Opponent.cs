@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class Character : MonoBehaviour, IPointerClickHandler
+public class Opponent : MonoBehaviour, IPointerClickHandler
 {
     public static Sprite CharacterToPlayWith;
     public static string CharacterName;

@@ -62,5 +62,9 @@ public class GameStartCanvas : MonoBehaviour
       level = Level.Medium;
       Instantiate(characterPanel, transform);
    }
+
+   public void goToUrl(string url){
+      Application.OpenURL(url);
+   }
 }
 

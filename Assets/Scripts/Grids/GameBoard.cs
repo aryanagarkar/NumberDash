@@ -13,6 +13,7 @@ public class GameBoard : MonoBehaviour
     GameObject computersTileToPlace;
     Timer dropTimer;
     Level selectedLevel;
+    bool activeGame = false;
 
 
     void Awake()
@@ -28,14 +29,20 @@ public class GameBoard : MonoBehaviour
 
         selectedLevel = GameStartCanvas.level;
         dropTimer = gameObject.AddComponent<Timer>();
-        dropTimer.Duration = Random.Range(6, 8);
+        activeGame = true;
     }
 
     public void Update(){
-         if (dropTimer.Finished)
+        if (dropTimer.Finished)
         {
-            placeTile(computersTileToPlace);
             dropTimer.Stop();
+            placeTile(computersTileToPlace);   
+        }
+    }
+
+    public bool ActiveGame {
+        get {
+            return activeGame;
         }
     }
 
@@ -45,14 +52,19 @@ public class GameBoard : MonoBehaviour
         moveEmptySlotToOccupied(slot.name);
 
         bool lost = slot.GetComponent<Slot>().IsGameLost();
-        Player currentPlayer = TurnManager.currentPlayer;
+        PlayerStatus currentPlayer = TurnManager.currentPlayer;
 
         if (lost) {
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost);
             GetComponent<TurnManager>().finishGame();
+            if(currentPlayer == PlayerStatus.You && lastDroppedTile.GetComponent<NicerOutline>().enabled == true){
+                lastDroppedTile.transform.parent.gameObject.GetComponent<Slot>().colorTiles();
+            }
+            activeGame = false;
         } else if(emptySlots.Count == 0) {
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied);
             GetComponent<TurnManager>().finishGame();
+            activeGame = false;
         } else { 
             GetComponent<TurnManager>().ChangeTurn();
         } 
@@ -62,6 +74,9 @@ public class GameBoard : MonoBehaviour
         Sprite s = transform.parent.GetComponent<MainCanvas>().PickRandomSprite();
         computersTileToPlace = transform.parent.GetComponent<MainCanvas>().GetTileToPlay();
         computersTileToPlace.GetComponent<Tile>().SetSprite(s);
+        int lower = 9 % (NumberGrid.GetRemainingTilesCount());
+        int duration = Random.Range(lower+1, lower+3);
+        dropTimer.Duration = duration;
         dropTimer.Run();
     }
 
@@ -74,7 +89,12 @@ public class GameBoard : MonoBehaviour
              break;
             
             case Level.Easy :
-             validSlotToPlay = GetRandomSlot(tile);
+            if(NumberGrid.GetRemainingTilesCount() >= 4){
+                validSlotToPlay = GetValidSlotForTile(tile);
+            }
+            else{
+                validSlotToPlay = GetRandomSlot(tile);
+            }
              break;
         }
         validSlotToPlay.Value.GetComponent<Slot>().DropTile(tile);

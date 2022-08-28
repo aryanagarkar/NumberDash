@@ -110,8 +110,12 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     // 2. Has it been already placed in a slot?
     // 3. If not, is it the players turn? If it's computers turn, then the player is not allowed to move tiles.
     private bool IsMovable() {
+        // Check if an active game in progress, else don't allow to move
+        if (!GameObject.FindWithTag("GameBoard").GetComponent<GameBoard>().ActiveGame) {
+            return false;
+        }
         // Check if it's the user playing
-        if (GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().CurrentPlayer == Player.You) {
+        if (GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().CurrentPlayer == PlayerStatus.You) {
             // Is the tile already in a slot - If yes, don't allow to move
             if (!placedInSlot) {
                 // If already opened, allow player to move it
