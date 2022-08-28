@@ -44,6 +44,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     public void DropTile(GameObject tile) {
         tile.transform.SetParent(transform, false);
         tile.transform.localPosition = Vector3.zero;
+        tile.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
         tile.GetComponent<Tile>().PlacedInSlot = true;
         SoundManager.PlayClipByName(AudioClipName.TilePlaced);
         NumberGrid.tilePlaced();
@@ -57,19 +58,20 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 DropTile(itemDragged);
                 SoundManager.PlayClipByName(AudioClipName.TilePlaced);
             }
+            GetComponent<NicerOutline>().enabled = false;
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(!tile) {
-            GetComponent<Outline>().enabled = true;
+            GetComponent<NicerOutline>().enabled = true;
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        GetComponent<Outline>().enabled = false;
+        GetComponent<NicerOutline>().enabled = false;
     }
 
     public bool IsGameLost(){
@@ -97,26 +99,4 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         }
         return false;
     }
-
-    public void colorTiles(){
-        int number = transform.GetChild(0).gameObject.GetComponent<Tile>().Number;
-        transform.GetChild(0).gameObject.GetComponent<NicerOutline>().effectColor = losingSpotColor;
-         if(IsConsecutive(left, number)){
-            left.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().enabled = true;
-            left.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().effectColor = consecutiveTileColor;
-         }
-         if(IsConsecutive(right, number)){
-            right.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().enabled = true;
-            right.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().effectColor = consecutiveTileColor;
-         }
-         if(IsConsecutive(top, number)){
-            top.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().enabled = true;
-            top.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().effectColor = consecutiveTileColor;
-         }
-         if(IsConsecutive(bottom, number)){
-            bottom.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().enabled = true;
-            bottom.transform.GetChild(0).gameObject.GetComponent<NicerOutline>().effectColor = consecutiveTileColor;
-         }
-    }
-
 }

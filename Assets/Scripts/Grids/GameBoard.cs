@@ -57,9 +57,6 @@ public class GameBoard : MonoBehaviour
         if (lost) {
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost);
             GetComponent<TurnManager>().finishGame();
-            if(currentPlayer == PlayerStatus.You && lastDroppedTile.GetComponent<NicerOutline>().enabled == true){
-                lastDroppedTile.transform.parent.gameObject.GetComponent<Slot>().colorTiles();
-            }
             activeGame = false;
         } else if(emptySlots.Count == 0) {
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied);
@@ -125,21 +122,20 @@ public class GameBoard : MonoBehaviour
     }
 
     private void highlightLatestPlayedTile(GameObject latestTile) {
-        /* Change the Tile Image Sprite to Highlighted One
+        // Change the Tile Image Sprite to Highlighted One
         string highlightedSpriteName = latestTile.GetComponent<Image>().sprite.name + "H";
         if (transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName) != null) {
             latestTile.GetComponent<Image>().sprite = transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName);
-*/
             // Reset the sprite for the last dropped tile back to normal
-            latestTile.GetComponent<NicerOutline>().enabled = true;
+            //latestTile.GetComponent<NicerOutline>().enabled = true;
             if(lastDroppedTile != null) {
-                //string spritename = lastDroppedTile.GetComponent<Image>().sprite.name.Replace("H", "");
-                //lastDroppedTile.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + spritename);
-                lastDroppedTile.GetComponent<NicerOutline>().enabled = false;
+                string spritename = lastDroppedTile.GetComponent<Image>().sprite.name.Replace("H", "");
+                lastDroppedTile.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + spritename);
+                //lastDroppedTile.GetComponent<NicerOutline>().enabled = false;
             }
 
             // Update the lastDroppedTile 
             lastDroppedTile = latestTile;
-        //}
+        }
     }
 }

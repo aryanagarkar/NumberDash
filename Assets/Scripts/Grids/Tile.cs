@@ -91,11 +91,11 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!dragStarted) {
             return;
         }
-        transform.localScale = new Vector3(1, 1, 1);
         itemBeingDragged = null;
         if(transform.parent == startParent) {
             transform.SetSiblingIndex(siblingIndex);
             transform.position = startPosition;
+            transform.localScale = new Vector3(1, 1, 1);
         } else {
             placedInSlot = true;
             Tile.openTile = null;
