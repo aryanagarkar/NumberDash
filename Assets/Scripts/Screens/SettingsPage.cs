@@ -15,11 +15,11 @@ public class SettingsPage : MonoBehaviour
    [SerializeField]
    GameObject avatarPanel; 
 
-   Image avatar;
+   GameObject avatarImagesPanel;
 
-
-   public void Start(){ 
-      SetAvatar();
+   public void Start(){
+      avatarImagesPanel = avatarPanel.transform.GetChild(1).gameObject;
+      SetSelectedAvatar();
       SetVolumeSlider();
    }
 
@@ -30,39 +30,43 @@ public class SettingsPage : MonoBehaviour
    public void SetVolumeSlider(){
       if(PlayerPrefs.HasKey("VolumeValue")){
          float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
-         volumeSlider.value = volumeValue;
-         volumeValueText.text = (volumeValue * 100).ToString("0.0") + "%";
+         updateVolumeSlider(volumeValue, (volumeValue * 100).ToString("0.0") + "%");
       } else {
-         volumeSlider.value = 0;
-         volumeValueText.text = "0.0%";
+         updateVolumeSlider(0.4f, "40%");
       }
    }
 
-    public void SetAvatar(){
-      avatar = avatarPanel.transform.GetChild(1).gameObject.GetComponent<Image>();
-      string avatarName = "Mummy";
+   public void SetSelectedAvatar(){
+      string avatarName = "PB";
       if(PlayerPrefs.HasKey("Avatar")){
          avatarName = PlayerPrefs.GetString("Avatar");
       }
-       avatar.sprite = Resources.Load<Sprite>("Sprites/" + avatarName);
+
+      foreach (Transform child in avatarImagesPanel.transform) {
+         if (child.gameObject.name == avatarName) {
+            child.GetComponent<Player>().ChangeSelection(true);
+         } else {
+            child.GetComponent<Player>().ChangeSelection(false);
+         }
+      }
    }
 
-   public void PlayerChosen(Sprite playerChosen){
-      transform.GetChild(3).gameObject.SetActive(false);
-      avatarPanel.SetActive(true);
-      avatar.sprite = playerChosen;
-   }
-
-   public void EditAvatarButtonClicked(){
-      transform.GetChild(3).gameObject.SetActive(true);
-      avatarPanel.SetActive(false);
+   public void PlayerAvatarSelected(string name){
+      foreach (Transform child in avatarImagesPanel.transform) {
+         if (child.gameObject.name != name) {
+            child.GetComponent<Player>().ChangeSelection(false);
+         }
+      }
    }
 
    public void BackButtonClicked(){
-      PlayerPrefs.SetString("Avatar", avatar.sprite.name);
-      //Debug.Log(previouslyChosenPlayer);
       float volumeValue = volumeSlider.value;
       PlayerPrefs.SetFloat("VolumeValue", volumeValue);
       AudioListener.volume = volumeValue;
+   }
+
+   private void updateVolumeSlider(float value, string text) {
+      volumeSlider.value = value;
+      volumeValueText.text = text;
    }
 }

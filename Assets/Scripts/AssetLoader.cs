@@ -7,6 +7,7 @@ public class AssetLoader : MonoBehaviour
      private static AssetLoader instance = null;
 
     //Sprites
+    Sprite defaultPlayer;
     Dictionary<string, Sprite> characters;
 
     public static AssetLoader GetInstance() {
@@ -14,6 +15,12 @@ public class AssetLoader : MonoBehaviour
             instance = new AssetLoader();
         }
         return instance;
+    }
+
+    public Sprite DefaultPlayer{
+        get{
+            return defaultPlayer;
+        }
     }
 
     public Sprite GetSpriteByName(string name) {
@@ -31,12 +38,17 @@ public class AssetLoader : MonoBehaviour
         }
 
         characters = new Dictionary<string, Sprite>();
-        characters.Add("Mummy", Resources.Load<Sprite>("Sprites/Mummy"));
-        characters.Add("Alien", Resources.Load<Sprite>("Sprites/Alien"));
-        characters.Add("Werewolf", Resources.Load<Sprite>("Sprites/Werewolf"));
-        characters.Add("Cyclops", Resources.Load<Sprite>("Sprites/Cyclops"));
-        characters.Add("Fish", Resources.Load<Sprite>("Sprites/Fish"));
-        characters.Add("Robot", Resources.Load<Sprite>("Sprites/Robot"));
+        characters.Add("PB", Resources.Load<Sprite>("Sprites/PB"));
+        defaultPlayer = characters["PB"];
+        characters.Add("PG", Resources.Load<Sprite>("Sprites/PG"));
+        characters.Add("PBSelected", Resources.Load<Sprite>("Sprites/PBSelected"));
+        characters.Add("PGSelected", Resources.Load<Sprite>("Sprites/PGSelected"));
+        characters.Add("PBCircle", Resources.Load<Sprite>("Sprites/PBCircle"));
+        characters.Add("PGCircle", Resources.Load<Sprite>("Sprites/PGCircle"));
+        characters.Add("OG", Resources.Load<Sprite>("Sprites/OG"));
+        characters.Add("OB", Resources.Load<Sprite>("Sprites/OB"));
+        characters.Add("OM", Resources.Load<Sprite>("Sprites/OM"));
+        characters.Add("OD", Resources.Load<Sprite>("Sprites/OD"));
     }
 
 

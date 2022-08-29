@@ -74,29 +74,31 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         GetComponent<NicerOutline>().enabled = false;
     }
 
-    public bool IsGameLost(){
-        int currentNumber = tile.GetComponent<Tile>().Number;
-        return IsConsecutive(left, currentNumber) 
-                || IsConsecutive(right, currentNumber) 
-                || IsConsecutive(top, currentNumber) 
-                || IsConsecutive(bottom, currentNumber);
+    public bool IsGameLost(out int currentNumber, out int neighbor){
+        currentNumber = tile.GetComponent<Tile>().Number;
+        return checkForAllConsecutiveSlots(currentNumber, out neighbor);
     }
 
-     public bool checkForAllConsecutiveSlots(int number){
-        return IsConsecutive(left, number) 
-                || IsConsecutive(right, number) 
-                || IsConsecutive(top, number) 
-                || IsConsecutive(bottom, number);
+    private bool checkForAllConsecutiveSlots(int number, out int neighbor){
+        return IsConsecutive(left, number, out neighbor) 
+                || IsConsecutive(right, number, out neighbor) 
+                || IsConsecutive(top, number, out neighbor) 
+                || IsConsecutive(bottom, number, out neighbor);
     }
 
+    public bool checkForAllConsecutiveSlots(int number){
+        int neighbor = -1;
+        return checkForAllConsecutiveSlots(number, out neighbor);
+    }
 
-    public bool IsConsecutive(GameObject neighboringSlot, int currentNumber) {
+    private bool IsConsecutive(GameObject neighboringSlot, int currentNumber, out int neighbor) {
         if(neighboringSlot != null && neighboringSlot.GetComponent<Slot>().tile != null){
-            int neighboringSlotNumber = neighboringSlot.GetComponent<Slot>().tile.GetComponent<Tile>().Number;
-            if(Math.Abs(currentNumber - neighboringSlotNumber) == 1){
+            neighbor = neighboringSlot.GetComponent<Slot>().tile.GetComponent<Tile>().Number;
+            if(Math.Abs(currentNumber - neighbor) == 1){
                 return true;
             }
         }
+        neighbor = -1;
         return false;
     }
 }

@@ -50,18 +50,19 @@ public class GameBoard : MonoBehaviour
         highlightLatestPlayedTile(slot.transform.GetChild(0).gameObject);
 
         moveEmptySlotToOccupied(slot.name);
-
-        bool lost = slot.GetComponent<Slot>().IsGameLost();
+        int currentNumber = -1;
+        int neighbor = -1;
+        bool isLost = slot.GetComponent<Slot>().IsGameLost(out currentNumber, out neighbor);
         PlayerStatus currentPlayer = TurnManager.currentPlayer;
 
-        if (lost) {
-            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost);
-            GetComponent<TurnManager>().finishGame();
+        if (isLost) {
+            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost, "Opponent", currentNumber, neighbor);
             activeGame = false;
+            GetComponent<TurnManager>().GameOver();
         } else if(emptySlots.Count == 0) {
-            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied);
-            GetComponent<TurnManager>().finishGame();
+            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied, "Opponent", -1, -1);
             activeGame = false;
+            GetComponent<TurnManager>().GameOver();
         } else { 
             GetComponent<TurnManager>().ChangeTurn();
         } 

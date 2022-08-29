@@ -7,7 +7,7 @@ using TMPro;
 
 public class CharacterPanel : MonoBehaviour
 {
-    Dictionary<string, Sprite> availableCharacters;
+   /* Dictionary<string, Sprite> availableCharacters;
     string chosenAvatar;
 
     GameObject spritePanel;
@@ -17,11 +17,11 @@ public class CharacterPanel : MonoBehaviour
         availableCharacters = new Dictionary<string, Sprite>(AssetLoader.GetInstance().Characters);  
         chosenAvatar = PlayerPrefs.GetString("Avatar");
         availableCharacters.Remove(chosenAvatar);  
-        spritePanel = transform.GetChild(1).gameObject;
-        SetCharacters();  
+       // spritePanel = transform.GetChild(1).gameObject;
+       // SetCharacters();  
     }
 
-    private void SetCharacters(){
+   /*private void SetCharacters(){
         int randomSpriteIndex;
         for(int i = 0; i < 4; i++){
             randomSpriteIndex = Random.Range(0, availableCharacters.Count - 1);
@@ -32,5 +32,5 @@ public class CharacterPanel : MonoBehaviour
             name.text = availableCharacters.ElementAt(randomSpriteIndex).Key;
             availableCharacters.Remove(availableCharacters.ElementAt(randomSpriteIndex).Key);
         }  
-    }
+    }*/
 }
