@@ -19,7 +19,7 @@ public class MainGame : MonoBehaviour
         mainCanvas = Resources.Load<GameObject>("Prefabs/MainCanvas");
         instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
         gameOverDelay = gameObject.AddComponent<Timer>();
-        gameOverDelay.Duration = 1;
+        gameOverDelay.Duration = 2;
     }
 
     public void Update(){
