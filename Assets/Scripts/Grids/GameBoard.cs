@@ -50,22 +50,30 @@ public class GameBoard : MonoBehaviour
         highlightLatestPlayedTile(slot.transform.GetChild(0).gameObject);
 
         moveEmptySlotToOccupied(slot.name);
-        int currentNumber = -1;
-        int neighbor = -1;
+        GameObject currentNumber;
+        GameObject neighbor;
         bool isLost = slot.GetComponent<Slot>().IsGameLost(out currentNumber, out neighbor);
         PlayerStatus currentPlayer = TurnManager.currentPlayer;
 
         if (isLost) {
+            PlayLostAnimation(currentNumber, neighbor);
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost, "Opponent", currentNumber, neighbor);
             activeGame = false;
             GetComponent<TurnManager>().GameOver();
         } else if(emptySlots.Count == 0) {
-            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied, "Opponent", -1, -1);
+            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied, "Opponent", null, null);
             activeGame = false;
             GetComponent<TurnManager>().GameOver();
         } else { 
             GetComponent<TurnManager>().ChangeTurn();
         } 
+    }
+
+    private void PlayLostAnimation(GameObject current, GameObject neighbor){
+        current.GetComponent<Animator>().enabled = true;
+        current.GetComponent<Animator>().Play("TileInLosingSlot", 0, 0f);
+        neighbor.GetComponent<Animator>().enabled = true;
+        neighbor.GetComponent<Animator>().Play("TileInLosingSlot", 0, 0f);
     }
 
     public void PlayComputersTurn() {
@@ -105,7 +113,7 @@ public class GameBoard : MonoBehaviour
         for(int i = 0; i < emptySlots.Count; i++){
             KeyValuePair<string, GameObject> emptySlot = emptySlots.ElementAt(i);
             GameObject slotObject = emptySlot.Value;
-            bool invalid = slotObject.GetComponent<Slot>().checkForAllConsecutiveSlots(tile.GetComponent<Tile>().Number);
+            bool invalid = slotObject.GetComponent<Slot>().checkForAllConsecutiveSlots(tile);
             if(invalid == false){
                 return emptySlot;
             }

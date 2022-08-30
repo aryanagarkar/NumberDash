@@ -48,16 +48,16 @@ public class MainGame : MonoBehaviour
        Application.Quit();
     }
 
-    public void gameOver(PlayerStatus lastPlayer, GameStatus gameStatus, string oppponentName, int losingNumber, int neighbor){
+    public void gameOver(PlayerStatus lastPlayer, GameStatus gameStatus, string oppponentName, GameObject losingNumber, GameObject neighbor){
         if (gameStatus == GameStatus.tied) {
             gameOverClipName = AudioClipName.Tied;
             gameOverText = "It was a tie!";
         } else if(lastPlayer == PlayerStatus.You) {
             gameOverClipName = AudioClipName.PlayerLost;
-            gameOverText = lastPlayer.ToString() + " lost! " + losingNumber + " can't be placed next to " + neighbor + ".";
+            gameOverText = lastPlayer.ToString() + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";
         } else {
             gameOverClipName = AudioClipName.PlayerWon;
-            gameOverText = PlayerStatus.You.ToString() + " won! " + oppponentName + " played " + losingNumber + " next to " + neighbor + ".";
+            gameOverText = PlayerStatus.You.ToString() + " won! " + oppponentName + " played " + losingNumber.GetComponent<Tile>().Number + " next to " + neighbor.GetComponent<Tile>().Number + ".";
         }
         gameOverDelay.Run();
     }

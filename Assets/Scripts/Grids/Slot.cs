@@ -74,31 +74,31 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         GetComponent<NicerOutline>().enabled = false;
     }
 
-    public bool IsGameLost(out int currentNumber, out int neighbor){
-        currentNumber = tile.GetComponent<Tile>().Number;
+    public bool IsGameLost(out GameObject currentNumber, out GameObject neighbor){
+        currentNumber = tile;
         return checkForAllConsecutiveSlots(currentNumber, out neighbor);
     }
 
-    private bool checkForAllConsecutiveSlots(int number, out int neighbor){
+    private bool checkForAllConsecutiveSlots(GameObject number, out GameObject neighbor){
         return IsConsecutive(left, number, out neighbor) 
                 || IsConsecutive(right, number, out neighbor) 
                 || IsConsecutive(top, number, out neighbor) 
                 || IsConsecutive(bottom, number, out neighbor);
     }
 
-    public bool checkForAllConsecutiveSlots(int number){
-        int neighbor = -1;
+    public bool checkForAllConsecutiveSlots(GameObject number){
+        GameObject neighbor;
         return checkForAllConsecutiveSlots(number, out neighbor);
     }
 
-    private bool IsConsecutive(GameObject neighboringSlot, int currentNumber, out int neighbor) {
+    private bool IsConsecutive(GameObject neighboringSlot, GameObject currentNumber, out GameObject neighbor) {
         if(neighboringSlot != null && neighboringSlot.GetComponent<Slot>().tile != null){
-            neighbor = neighboringSlot.GetComponent<Slot>().tile.GetComponent<Tile>().Number;
-            if(Math.Abs(currentNumber - neighbor) == 1){
+            neighbor = neighboringSlot.GetComponent<Slot>().tile;
+            if(Math.Abs(currentNumber.GetComponent<Tile>().Number - neighbor.GetComponent<Tile>().Number) == 1){
                 return true;
             }
         }
-        neighbor = -1;
+        neighbor = null;
         return false;
     }
 }
