@@ -56,6 +56,7 @@ public class GameBoard : MonoBehaviour
         PlayerStatus currentPlayer = TurnManager.currentPlayer;
 
         if (isLost) {
+            SoundManager.PlayAudioXTimes(AudioClipName.Alarm, 1);
             PlayLostAnimation(currentNumber, neighbor);
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost, "Opponent", currentNumber, neighbor);
             activeGame = false;

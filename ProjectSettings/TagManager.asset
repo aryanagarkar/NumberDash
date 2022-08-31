@@ -15,6 +15,7 @@ TagManager:
   - InstructionsCanvas
   - ToolTip
   - Settings
+  - HelpText
   layers:
   - Default
   - TransparentFX

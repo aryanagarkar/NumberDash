@@ -223,6 +223,8 @@ GameObject:
   - component: {fileID: 7360299125175619325}
   - component: {fileID: 3748793189402679384}
   - component: {fileID: 1061843600266697633}
+  - component: {fileID: 3557375823318502353}
+  - component: {fileID: 1829350969}
   m_Layer: 5
   m_Name: Character
   m_TagString: Character
@@ -281,7 +283,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8b824a31873344f40a0a507bbd16e9d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9754ea19d8af14b848fbdf8e4406144e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -291,6 +293,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3557375823318502353
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474486181440041239}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &1829350969
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474486181440041239}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f6ce2450f3fe4cc78cfa67d0aed751b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7569560513700148481
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +471,7 @@ GameObject:
   - component: {fileID: 4877972199462228315}
   - component: {fileID: 449926354549467277}
   - component: {fileID: 7579271109834365213}
-  - component: {fileID: 1829350969}
+  - component: {fileID: 7659760674921373741}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -503,7 +537,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &1829350969
+--- !u!95 &7659760674921373741
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0

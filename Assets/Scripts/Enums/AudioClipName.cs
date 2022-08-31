@@ -6,5 +6,6 @@ public enum AudioClipName
     Tied,
     TilePlaced,
     ButtonClick,
-    Swoosh
+    Swoosh,
+    Alarm
 }

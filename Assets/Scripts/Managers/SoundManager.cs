@@ -24,10 +24,17 @@ public class SoundManager : MonoBehaviour
         clips.Add(AudioClipName.Tied, Resources.Load<AudioClip>("Audio/Tied"));
         clips.Add(AudioClipName.TilePlaced, Resources.Load<AudioClip>("Audio/TilePlaced"));
         clips.Add(AudioClipName.ButtonClick, Resources.Load<AudioClip>("Audio/ButtonClick"));
-         clips.Add(AudioClipName.Swoosh, Resources.Load<AudioClip>("Audio/Swoosh"));
+        clips.Add(AudioClipName.Swoosh, Resources.Load<AudioClip>("Audio/Swoosh"));
+        clips.Add(AudioClipName.Alarm, Resources.Load<AudioClip>("Audio/Alarm"));
     }
 
     public static void PlayClipByName(AudioClipName name){
         source.PlayOneShot(clips[name]);
+    }
+
+    public static void PlayAudioXTimes(AudioClipName name, int timesToLoop){
+        for(int i = 0; i < timesToLoop; i++){
+            source.PlayOneShot(clips[name]);
+        }
     }
 }

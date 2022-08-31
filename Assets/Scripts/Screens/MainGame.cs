@@ -19,7 +19,6 @@ public class MainGame : MonoBehaviour
         mainCanvas = Resources.Load<GameObject>("Prefabs/MainCanvas");
         instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
         gameOverDelay = gameObject.AddComponent<Timer>();
-        gameOverDelay.Duration = 2;
     }
 
     public void Update(){
@@ -52,12 +51,15 @@ public class MainGame : MonoBehaviour
         if (gameStatus == GameStatus.tied) {
             gameOverClipName = AudioClipName.Tied;
             gameOverText = "It was a tie!";
+            gameOverDelay.Duration = 1;
         } else if(lastPlayer == PlayerStatus.You) {
             gameOverClipName = AudioClipName.PlayerLost;
             gameOverText = lastPlayer.ToString() + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";
+            gameOverDelay.Duration = 2.2f;
         } else {
             gameOverClipName = AudioClipName.PlayerWon;
             gameOverText = PlayerStatus.You.ToString() + " won! " + oppponentName + " played " + losingNumber.GetComponent<Tile>().Number + " next to " + neighbor.GetComponent<Tile>().Number + ".";
+            gameOverDelay.Duration = 2.2f;
         }
         gameOverDelay.Run();
     }

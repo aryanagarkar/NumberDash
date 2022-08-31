@@ -40,7 +40,7 @@ public class MainCanvas : MonoBehaviour
     }
 
     public Sprite PickRandomSprite(){
-        int index = Random.Range(0, numbers.Count - 1);
+        int index = Random.Range(0, numbers.Count);
         Sprite s = numbers[index];
         numbers.Remove(s);  
         return s;

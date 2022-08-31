@@ -13,11 +13,15 @@ public class TurnManager : MonoBehaviour
     Animator turnTextAnimator;
     TextMeshProUGUI textComponent;
     Image characterImage;
+    Animator characterAnimator;
     TextMeshProUGUI characterText;
-    Timer initialComputerTurnDelay;
+    Timer turnDelay;
     GameObject clock;
     Animator clockAnim;
     GameObject youPlayText;
+    GameObject helpText;
+
+    bool youAreFirsttPlayer = false;
 
     Sprite characterSprite;
     string characterName;
@@ -32,13 +36,15 @@ public class TurnManager : MonoBehaviour
         turnText = GameObject.FindWithTag("TurnText");
         character = GameObject.FindWithTag("Character");
         characterImage = character.GetComponent<Image>();
+        characterAnimator = character.GetComponent<Animator>();
         turnTextAnimator = turnText.GetComponent<Animator>();
         characterText = character.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         clock = character.transform.GetChild(1).gameObject;
         youPlayText = character.transform.GetChild(2).gameObject;
         clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        initialComputerTurnDelay = gameObject.AddComponent<Timer>();
-        initialComputerTurnDelay.Duration = 2;
+        helpText = GameObject.FindWithTag("HelpText");
+        turnDelay = gameObject.AddComponent<Timer>();
+        turnDelay.Duration = 2;
 
         if(Opponent.CharacterToPlayWith != null){
             characterSprite = Opponent.CharacterToPlayWith;
@@ -67,24 +73,29 @@ public class TurnManager : MonoBehaviour
             youPlayText.SetActive(true);
             textComponent.text = "You Play First!";
             characterImage.sprite = playerSprite;
+            youAreFirsttPlayer = true;
+            helpText.GetComponent<TextMeshProUGUI>().enabled = true;
+            turnDelay.Run();
         } else {
             clock.SetActive(true);
             clockAnim.enabled = true;
             clockAnim.Play("Clock", 0, 0f);
             textComponent.text = characterName + " Plays First";
             characterImage.sprite = characterSprite;
+            turnDelay.Run();
         }
         turnTextAnimator.Play("TurnText", 0, 0f);
-        
-        initialComputerTurnDelay.Run();
     }
 
 
    public void Update(){
-         if (initialComputerTurnDelay.Finished)
+         if (turnDelay.Finished)
         {
+            if(youAreFirsttPlayer == true){
+                helpText.GetComponent<TextMeshProUGUI>().enabled = false;
+            }
             PlayTurn();
-            initialComputerTurnDelay.Stop();
+            turnDelay.Stop();
         }
     } 
 
@@ -97,6 +108,7 @@ public class TurnManager : MonoBehaviour
         } else {
             youPlayText.SetActive(false);
             clock.SetActive(true);
+            characterAnimator.enabled = true;
             clockAnim.enabled = true;
             clockAnim.Play("Clock", 0, 0f);
             characterImage.sprite = characterSprite;
@@ -106,6 +118,7 @@ public class TurnManager : MonoBehaviour
 
     public void ChangeTurn(){
         if (currentPlayer == PlayerStatus.Computer) {
+            turnDelay.Run();
             currentPlayer = PlayerStatus.You;
         }else {
             currentPlayer = PlayerStatus.Computer;
