@@ -64,6 +64,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
             SetSprite(s);
             Tile.openTile = gameObject;
+            GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().TilePickedbyPlayer();
         }
     }
 

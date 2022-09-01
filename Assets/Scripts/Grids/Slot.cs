@@ -59,6 +59,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
                 SoundManager.PlayClipByName(AudioClipName.TilePlaced);
             }
             GetComponent<NicerOutline>().enabled = false;
+            GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().TileDroppedByPlayer();
         }
     }
 

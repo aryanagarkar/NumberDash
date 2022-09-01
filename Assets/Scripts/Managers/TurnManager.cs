@@ -19,9 +19,10 @@ public class TurnManager : MonoBehaviour
     GameObject clock;
     Animator clockAnim;
     GameObject youPlayText;
-    GameObject helpText;
+    GameObject pickTileText;
+    GameObject dropTileText;
 
-    bool youAreFirsttPlayer = false;
+    bool firstTurnForYou = false;
 
     Sprite characterSprite;
     string characterName;
@@ -34,6 +35,8 @@ public class TurnManager : MonoBehaviour
 
     void Awake(){
         turnText = GameObject.FindWithTag("TurnText");
+        pickTileText = transform.parent.Find("PickTile").gameObject;
+        dropTileText = transform.parent.Find("DropTile").gameObject;
         character = GameObject.FindWithTag("Character");
         characterImage = character.GetComponent<Image>();
         characterAnimator = character.GetComponent<Animator>();
@@ -42,7 +45,6 @@ public class TurnManager : MonoBehaviour
         clock = character.transform.GetChild(1).gameObject;
         youPlayText = character.transform.GetChild(2).gameObject;
         clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        helpText = GameObject.FindWithTag("HelpText");
         turnDelay = gameObject.AddComponent<Timer>();
         turnDelay.Duration = 2;
 
@@ -61,21 +63,21 @@ public class TurnManager : MonoBehaviour
         {
             playerSprite = AssetLoader.GetInstance().GetSpriteByName(PlayerPrefs.GetString("Avatar"));      
         }
+        characterImage.enabled = true;  
+    }
 
+    public void StartGame() {
         int currentPlayerIndex = Random.Range(1, 10) % 2;
         currentPlayer = (PlayerStatus)currentPlayerIndex;
-
-        characterImage.enabled = true;
-
         textComponent = turnText.GetComponent<TextMeshProUGUI>();
         turnTextAnimator.enabled = true;
+
         if (currentPlayer == PlayerStatus.You) {
             youPlayText.SetActive(true);
             textComponent.text = "You Play First!";
             characterImage.sprite = playerSprite;
-            youAreFirsttPlayer = true;
-            helpText.GetComponent<TextMeshProUGUI>().enabled = true;
-            turnDelay.Run();
+            firstTurnForYou = true;
+            pickTileText.SetActive(true);
         } else {
             clock.SetActive(true);
             clockAnim.enabled = true;
@@ -87,13 +89,24 @@ public class TurnManager : MonoBehaviour
         turnTextAnimator.Play("TurnText", 0, 0f);
     }
 
+    public void TilePickedbyPlayer(){
+        if(firstTurnForYou == true){
+            pickTileText.SetActive(false);
+            dropTileText.SetActive(true);
+        }
+    }
+
+    public void TileDroppedByPlayer(){
+         if(firstTurnForYou == true){
+            dropTileText.SetActive(false);
+            firstTurnForYou = false;
+        }
+    }
+
 
    public void Update(){
          if (turnDelay.Finished)
         {
-            if(youAreFirsttPlayer == true){
-                helpText.GetComponent<TextMeshProUGUI>().enabled = false;
-            }
             PlayTurn();
             turnDelay.Stop();
         }
@@ -118,7 +131,6 @@ public class TurnManager : MonoBehaviour
 
     public void ChangeTurn(){
         if (currentPlayer == PlayerStatus.Computer) {
-            turnDelay.Run();
             currentPlayer = PlayerStatus.You;
         }else {
             currentPlayer = PlayerStatus.Computer;

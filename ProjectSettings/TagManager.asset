@@ -15,7 +15,8 @@ TagManager:
   - InstructionsCanvas
   - ToolTip
   - Settings
-  - HelpText
+  - DropTileText
+  - PickTileText
   layers:
   - Default
   - TransparentFX

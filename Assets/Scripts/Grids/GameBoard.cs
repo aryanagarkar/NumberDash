@@ -14,6 +14,8 @@ public class GameBoard : MonoBehaviour
     Timer dropTimer;
     Level selectedLevel;
     bool activeGame = false;
+    bool isPlayersFirstTurn = false;
+
 
 
     void Awake()
@@ -26,10 +28,10 @@ public class GameBoard : MonoBehaviour
         {
             emptySlots.Add(child.gameObject.name, child.gameObject);
         }
-
         selectedLevel = GameStartCanvas.level;
         dropTimer = gameObject.AddComponent<Timer>();
         activeGame = true;
+        GetComponent<TurnManager>().StartGame();
     }
 
     public void Update(){
@@ -43,6 +45,15 @@ public class GameBoard : MonoBehaviour
     public bool ActiveGame {
         get {
             return activeGame;
+        }
+    }
+
+    public bool PlayersFirstTurn {
+        get {
+            return isPlayersFirstTurn;
+        }
+        set {
+            isPlayersFirstTurn = value;
         }
     }
 
