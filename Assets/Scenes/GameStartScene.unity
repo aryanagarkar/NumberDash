@@ -384,6 +384,8 @@ GameObject:
   - component: {fileID: 1677431782}
   - component: {fileID: 1677431784}
   - component: {fileID: 1677431785}
+  - component: {fileID: 1677431786}
+  - component: {fileID: 1677431787}
   m_Layer: 0
   m_Name: PersistentObject
   m_TagString: Untagged
@@ -526,3 +528,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5aa22a8fc76f43049a857ad9904eba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1677431786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677431781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84dee5998d92d4da3bcbc46b1edb76b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidGameId: 4909911
+  _iOSGameId: 4909910
+  _testMode: 1
+--- !u!114 &1677431787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677431781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25b892f91ce141fcbe1f51e6a928870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidAdUnitId: Interstitial_Android
+  _iOsAdUnitId: Interstitial_iOS

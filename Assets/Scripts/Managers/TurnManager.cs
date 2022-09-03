@@ -13,16 +13,18 @@ public class TurnManager : MonoBehaviour
     Animator turnTextAnimator;
     TextMeshProUGUI textComponent;
     Image characterImage;
-    Animator characterAnimator;
     TextMeshProUGUI characterText;
-    Timer turnDelay;
     GameObject clock;
     Animator clockAnim;
+    Animator characterAnimator;
     GameObject youPlayText;
     GameObject pickTileText;
     GameObject dropTileText;
+    GameObject pointAtcomputerText;
+    GameObject pickTileAgainText;
+    GameObject dropTileStrategyText;
 
-    bool firstTurnForYou = false;
+    bool runTutorial = false;
 
     Sprite characterSprite;
     string characterName;
@@ -34,19 +36,22 @@ public class TurnManager : MonoBehaviour
     }
 
     void Awake(){
-        turnText = GameObject.FindWithTag("TurnText");
+        turnText = transform.parent.Find("TurnText").gameObject;
         pickTileText = transform.parent.Find("PickTile").gameObject;
         dropTileText = transform.parent.Find("DropTile").gameObject;
+        pointAtcomputerText = transform.parent.Find("PointAtComputer").gameObject;
+        pickTileAgainText = transform.parent.Find("PickTileAgain").gameObject;
+        dropTileStrategyText = transform.parent.Find("DropTileStrategy").gameObject;
+
         character = GameObject.FindWithTag("Character");
         characterImage = character.GetComponent<Image>();
-        characterAnimator = character.GetComponent<Animator>();
         turnTextAnimator = turnText.GetComponent<Animator>();
+        characterAnimator = character.GetComponent<Animator>();
         characterText = character.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         clock = character.transform.GetChild(1).gameObject;
         youPlayText = character.transform.GetChild(2).gameObject;
         clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        turnDelay = gameObject.AddComponent<Timer>();
-        turnDelay.Duration = 2;
+        textComponent = turnText.GetComponent<TextMeshProUGUI>();
 
         if(Opponent.CharacterToPlayWith != null){
             characterSprite = Opponent.CharacterToPlayWith;
@@ -68,77 +73,108 @@ public class TurnManager : MonoBehaviour
 
     public void StartGame() {
         int currentPlayerIndex = Random.Range(1, 10) % 2;
+        if(!PlayerPrefs.HasKey("FirstGame")){
+            currentPlayerIndex = 1;
+            runTutorial = true;
+        } 
         currentPlayer = (PlayerStatus)currentPlayerIndex;
-        textComponent = turnText.GetComponent<TextMeshProUGUI>();
-        turnTextAnimator.enabled = true;
-
-        if (currentPlayer == PlayerStatus.You) {
-            youPlayText.SetActive(true);
-            textComponent.text = "You Play First!";
-            characterImage.sprite = playerSprite;
-            firstTurnForYou = true;
-            pickTileText.SetActive(true);
-        } else {
-            clock.SetActive(true);
-            clockAnim.enabled = true;
-            clockAnim.Play("Clock", 0, 0f);
-            textComponent.text = characterName + " Plays First";
-            characterImage.sprite = characterSprite;
-            turnDelay.Run();
-        }
-        turnTextAnimator.Play("TurnText", 0, 0f);
+        PlayTurn(true);
     }
 
     public void TilePickedbyPlayer(){
-        if(firstTurnForYou == true){
+        if (pickTileText.activeSelf) {
             pickTileText.SetActive(false);
             dropTileText.SetActive(true);
+        } else if (pickTileAgainText.activeSelf) {
+            pickTileAgainText.SetActive(false);
+            dropTileStrategyText.SetActive(true);
         }
     }
 
     public void TileDroppedByPlayer(){
-         if(firstTurnForYou == true){
+         if (dropTileText.activeSelf){
             dropTileText.SetActive(false);
-            firstTurnForYou = false;
+            pointAtcomputerText.SetActive(true);
+        } else if (dropTileStrategyText.activeSelf){
+            dropTileStrategyText.SetActive(false);
         }
     }
 
-
-   public void Update(){
-         if (turnDelay.Finished)
-        {
-            PlayTurn();
-            turnDelay.Stop();
-        }
-    } 
-
-    private void PlayTurn(){
+    private void PlayTurn(bool firstMoveOfTheGame){
          if (currentPlayer == PlayerStatus.You) {
-            youPlayText.SetActive(true);
-            clock.SetActive(false);
-            clockAnim.enabled = false;
-            characterImage.sprite = playerSprite;
+            ActivatePlayerSpecificUISettings();
+            textComponent.text = "You Play First!";  
         } else {
-            youPlayText.SetActive(false);
-            clock.SetActive(true);
-            characterAnimator.enabled = true;
-            clockAnim.enabled = true;
-            clockAnim.Play("Clock", 0, 0f);
-            characterImage.sprite = characterSprite;
-            GetComponent<GameBoard>().PlayComputersTurn();
+            ActivateComputerSpecificUISettings();
+            textComponent.text = characterName + " Plays First";
+            Invoke("PlayComputersTurn", 2);
         }
+        if(firstMoveOfTheGame) {
+            pickTileText.SetActive(runTutorial); 
+            turnText.SetActive(true);
+            turnTextAnimator.enabled = true;
+            turnTextAnimator.Play("TurnText", 0, 0f);
+        }
+    }
+
+    /*private void playFadeInAnimation() {
+        characterAnimator.Play("FadeIn", 0, 0f);
+    }*/
+
+    private void PlayComputersTurn() {
+        GetComponent<GameBoard>().PlayComputersTurn();
+    }
+    
+    private void ChangeTurnDelay() {
+        characterAnimator.Play("FadeIn", 0, 0f);
+        //characterImage.enabled = true;  
+        if (currentPlayer == PlayerStatus.Computer) {
+            if (pointAtcomputerText.activeSelf) {
+                pointAtcomputerText.SetActive(false);
+                pickTileAgainText.SetActive(true);
+            }
+            currentPlayer = PlayerStatus.You;
+            
+        }else {
+            currentPlayer = PlayerStatus.Computer;
+            
+        }
+        PlayTurn(false);
+    }
+
+    private void ActivateComputerSpecificUISettings() {
+        DeactivatePlayerSpecificUISettings();
+        characterImage.sprite = characterSprite;
+        clock.SetActive(true);
+        clockAnim.enabled = true;
+    }
+
+    private void DeactivateComputerSpecificUISettings() {
+        clock.SetActive(false);
+        clockAnim.enabled = false;
+    }
+
+    private void DeactivatePlayerSpecificUISettings() {
+        youPlayText.SetActive(false);
+    }
+
+    private void ActivatePlayerSpecificUISettings() {
+        DeactivateComputerSpecificUISettings();
+        characterImage.sprite = playerSprite;
+        youPlayText.SetActive(true);
     }
 
     public void ChangeTurn(){
-        if (currentPlayer == PlayerStatus.Computer) {
-            currentPlayer = PlayerStatus.You;
-        }else {
-            currentPlayer = PlayerStatus.Computer;
-        }
-        PlayTurn();
+        characterAnimator.enabled = true;
+        characterAnimator.Play("FadeOut", 0, 0f);
+        Invoke("ChangeTurnDelay", 1);
     }
 
     public void GameOver() {
+        if(!PlayerPrefs.HasKey("FirstGame")) {
+            PlayerPrefs.SetInt("FirstGame", 0);
+        }
+        GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().LoadAd();
         ResetAnimations();
     }
 

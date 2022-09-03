@@ -223,8 +223,8 @@ GameObject:
   - component: {fileID: 7360299125175619325}
   - component: {fileID: 3748793189402679384}
   - component: {fileID: 1061843600266697633}
-  - component: {fileID: 3557375823318502353}
-  - component: {fileID: 1829350969}
+  - component: {fileID: 470605739806864008}
+  - component: {fileID: 1841262458743364772}
   m_Layer: 5
   m_Name: Character
   m_TagString: Character
@@ -293,19 +293,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &3557375823318502353
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3474486181440041239}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!95 &1829350969
+--- !u!95 &470605739806864008
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -313,7 +301,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3474486181440041239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5f6ce2450f3fe4cc78cfa67d0aed751b, type: 2}
   m_CullingMode: 0
@@ -325,6 +313,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!225 &1841262458743364772
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474486181440041239}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7569560513700148481
 GameObject:
   m_ObjectHideFlags: 0

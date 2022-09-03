@@ -11,9 +11,6 @@ public class AssetLoader : MonoBehaviour
     Dictionary<string, Sprite> characters;
 
     public static AssetLoader GetInstance() {
-        if (instance == null) {
-            instance = new AssetLoader();
-        }
         return instance;
     }
 
@@ -32,7 +29,7 @@ public class AssetLoader : MonoBehaviour
         if(instance == null){
             instance = this;
             DontDestroyOnLoad(gameObject);
-        }else if(instance != this){
+        } else if(instance != this){
             Destroy(this.gameObject);
             return;
         }

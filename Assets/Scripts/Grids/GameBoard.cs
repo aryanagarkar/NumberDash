@@ -96,7 +96,7 @@ public class GameBoard : MonoBehaviour
         SoundManager.PlayClipByName(AudioClipName.Swoosh);
         computersTileToPlace.GetComponent<Tile>().SetSprite(s);
         int lower = 9 % (NumberGrid.GetRemainingTilesCount());
-        int duration = Random.Range(lower+1, lower+3);
+        int duration = Random.Range(lower+2, lower+4);
         dropTimer.Duration = duration;
         dropTimer.Run();
     }

@@ -13,16 +13,27 @@ public class GameOverCanvas : MonoBehaviour
     }
 
 
+
     public void updateTextandPlaySound(string text, AudioClipName name){
         textComponent.text = text;
         SoundManager.PlayClipByName(name);
+        /*, (success) => {
+            Debug.Log("Callback called");
+            transform.Find("YesPlayAgain").gameObject.GetComponent<Button>().enabled = true;
+            transform.Find("NoToPlayAgain").gameObject.GetComponent<Button>().enabled = true;
+        });*/
     }
 
     public void playAgain(){
-        Camera.main.GetComponent<MainGame>().playAgain();
+        SoundManager.Stop();
+        GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().ShowAd((isSuccess) => {
+            //Debug.Log("Callback called from ad finished");
+            Camera.main.GetComponent<MainGame>().playAgain();
+        }); 
     }
 
     public void Menu(){
-          Camera.main.GetComponent<MainGame>().GoToStartScreen();
+        SoundManager.Stop();
+        Camera.main.GetComponent<MainGame>().GoToStartScreen();
     }
 }
