@@ -21,6 +21,7 @@ public class MainGame : MonoBehaviour
 
     public void GoToStartScreen(){
        ScreenManager.GetInstance().GoToScene(SceneName.GameStartScene);
+       Scoreboard.ResetScores();
     }
 
      public void quit(){

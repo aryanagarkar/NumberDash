@@ -57,4 +57,9 @@ public class Scoreboard : MonoBehaviour
             messageText.text = "You are Tied!\nAre you sure you want to quit?";
         }
     }
+
+    public static void ResetScores(){
+        yourScore = 0;
+        computerScore = 0;
+    }
 }

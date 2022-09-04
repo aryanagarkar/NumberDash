@@ -44,31 +44,23 @@ public class ScreenManager : MonoBehaviour
     }
 
     public void InstantiateScreen(CanvasName name, Transform parent){
-        Debug.Log(name);
-        Debug.Log(parent);
         switch(name){
             case CanvasName.LevelPanel:
-            Debug.Log(levelPanel);
                  Instantiate(levelPanel, parent);
                  break;
             case CanvasName.Settings:
-            Debug.Log(settings);
                  Instantiate(settings, parent);
                  break;
             case CanvasName.InstructionsPage:
-            Debug.Log(instructionsPage);
                  Instantiate(instructionsPage, parent);
                  break;
             case CanvasName.CharacterPanel:
-            Debug.Log(characterPanel);
                  Instantiate(characterPanel, parent);
                  break;
             case CanvasName.GameOver:
-            Debug.Log(gameOver);
                  Instantiate(gameOver, parent);
                  break;
             case CanvasName.ScoreMessage:
-            Debug.Log(scoreMessage);
                  Instantiate(scoreMessage, parent);
                  break;
         }
