@@ -14,9 +14,6 @@ public class GameBoard : MonoBehaviour
     Timer dropTimer;
     Level selectedLevel;
     bool activeGame = false;
-    bool isPlayersFirstTurn = false;
-
-
 
     void Awake()
     {
@@ -34,26 +31,9 @@ public class GameBoard : MonoBehaviour
         GetComponent<TurnManager>().StartGame();
     }
 
-    public void Update(){
-        if (dropTimer.Finished)
-        {
-            dropTimer.Stop();
-            placeTile(computersTileToPlace);   
-        }
-    }
-
     public bool ActiveGame {
         get {
             return activeGame;
-        }
-    }
-
-    public bool PlayersFirstTurn {
-        get {
-            return isPlayersFirstTurn;
-        }
-        set {
-            isPlayersFirstTurn = value;
         }
     }
 
@@ -71,11 +51,11 @@ public class GameBoard : MonoBehaviour
             PlayLostAnimation(currentNumber, neighbor);
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost, "Opponent", currentNumber, neighbor);
             activeGame = false;
-            GetComponent<TurnManager>().GameOver();
+            GetComponent<TurnManager>().EndGame();
         } else if(emptySlots.Count == 0) {
             Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied, "Opponent", null, null);
             activeGame = false;
-            GetComponent<TurnManager>().GameOver();
+            GetComponent<TurnManager>().EndGame();
         } else { 
             GetComponent<TurnManager>().ChangeTurn();
         } 
@@ -96,29 +76,28 @@ public class GameBoard : MonoBehaviour
         SoundManager.PlayClipByName(AudioClipName.Swoosh);
         computersTileToPlace.GetComponent<Tile>().SetSprite(s);
         int lower = 9 % (NumberGrid.GetRemainingTilesCount());
-        int duration = Random.Range(lower+2, lower+4);
-        dropTimer.Duration = duration;
-        dropTimer.Run();
+        int duration = Random.Range(lower+1, lower+2);
+        Invoke("PlaceTile", duration);
     }
 
-    public void placeTile(GameObject tile){
+    public void PlaceTile(){
         KeyValuePair<string, GameObject> validSlotToPlay = new KeyValuePair<string, GameObject>();
         switch (selectedLevel)
         {
             case Level.Medium :
-             validSlotToPlay = GetValidSlotForTile(tile);
+             validSlotToPlay = GetValidSlotForTile(computersTileToPlace);
              break;
             
             case Level.Easy :
             if(NumberGrid.GetRemainingTilesCount() >= 4){
-                validSlotToPlay = GetValidSlotForTile(tile);
+                validSlotToPlay = GetValidSlotForTile(computersTileToPlace);
             }
             else{
-                validSlotToPlay = GetRandomSlot(tile);
+                validSlotToPlay = GetRandomSlot(computersTileToPlace);
             }
              break;
         }
-        validSlotToPlay.Value.GetComponent<Slot>().DropTile(tile);
+        validSlotToPlay.Value.GetComponent<Slot>().DropTile(computersTileToPlace);
     }
 
     private KeyValuePair<string, GameObject> GetValidSlotForTile(GameObject tile){
