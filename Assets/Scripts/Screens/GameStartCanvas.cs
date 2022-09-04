@@ -5,22 +5,10 @@ using UnityEngine;
 
 public class GameStartCanvas : MonoBehaviour
 {
-   GameObject characterPanel;
-   GameObject levelPanel;
-   GameObject instructionPage;
-   GameObject optionsMenu;
-
    public static Level level;
 
    public void Awake(){
       LoadPlayerPrefValues();
-   }
-
-   public void Start(){
-    characterPanel = Resources.Load<GameObject>("Prefabs/Canvases/CharacterPanel");
-    levelPanel = Resources.Load<GameObject>("Prefabs/Canvases/LevelPanel");
-    instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
-    optionsMenu = Resources.Load<GameObject>("Prefabs/Canvases/Settings");
    }
 
    private void LoadPlayerPrefValues(){
@@ -34,19 +22,19 @@ public class GameStartCanvas : MonoBehaviour
    }
 
    public void play(){
-    Instantiate(levelPanel, transform);
+      ScreenManager.GetInstance().InstantiateScreen(CanvasName.LevelPanel, transform);
    }
 
    public void goToMainGame(){
-    SceneManager.LoadScene(1);
+    ScreenManager.GetInstance().GoToScene(SceneName.MainGameBoard);
    }
 
    public void goToOptionsMenu(){
-      Instantiate(optionsMenu, transform);
+       ScreenManager.GetInstance().InstantiateScreen(CanvasName.Settings, transform);
    }
 
    public void goTohowToPage(){
-      Instantiate(instructionPage, transform);
+       ScreenManager.GetInstance().InstantiateScreen(CanvasName.InstructionsPage, transform);
    }
 
    public void Quit(){
@@ -55,12 +43,12 @@ public class GameStartCanvas : MonoBehaviour
 
    public void EasyButtonClicked(){
       level = Level.Easy;
-      Instantiate(characterPanel, transform);
+       ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, transform);
    }
 
    public void MediumButtonClicked(){
       level = Level.Medium;
-      Instantiate(characterPanel, transform);
+      ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, transform);
    }
 
    public void goToUrl(string url){

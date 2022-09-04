@@ -24,11 +24,10 @@ public class GameOverCanvas : MonoBehaviour
         GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().ShowAd((isSuccess) => {
             Camera.main.GetComponent<MainGame>().playAgain();
         }); 
-        Destroy(gameObject);
     }
 
     public void Menu(){
         SoundManager.Stop();
-        Camera.main.GetComponent<MainGame>().GoToStartScreen();
+        Camera.main.GetComponent<MainGame>().DisplayScoreMessage();
     }
 }

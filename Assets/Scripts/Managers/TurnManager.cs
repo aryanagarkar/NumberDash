@@ -57,9 +57,9 @@ public class TurnManager : MonoBehaviour
         characterText = character.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         
         // Objects to animate on top of characters (Clock on top of computer and "You Play" text on top of player)
-        clock = character.transform.GetChild(1).gameObject;
+        clock = character.transform.Find("Clock").gameObject;
         clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        youPlayText = character.transform.GetChild(2).gameObject;
+        youPlayText = character.transform.Find("YouPlay").gameObject;
 
         // Setting sprites for player and computer
         computerSprite = Opponent.CharacterToPlayWith;

@@ -5,21 +5,10 @@ using UnityEngine;
 
 public class MainGame : MonoBehaviour
 {
-    GameObject gameOverCanvas;
-    GameObject mainCanvas;
-    GameObject instructionPage;
-    GameObject scoreboard;
 
     string gameOverText;
     AudioClipName gameOverClipName;
     GameStatus gameOverStatus;
-
-    void Start()
-    {
-        gameOverCanvas = Resources.Load<GameObject>("Prefabs/Canvases/GameOver");
-        mainCanvas = Resources.Load<GameObject>("Prefabs/MainCanvas");
-        instructionPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
-    }
 
 
     public void playAgain(){
@@ -27,11 +16,11 @@ public class MainGame : MonoBehaviour
     }
 
     public void help(){
-        Instantiate(instructionPage, GameObject.FindWithTag("MainCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(CanvasName.InstructionsPage, GameObject.FindWithTag("MainCanvas").transform);
     }
 
     public void GoToStartScreen(){
-       SceneManager.LoadScene(0);
+       ScreenManager.GetInstance().GoToScene(SceneName.GameStartScene);
     }
 
      public void quit(){
@@ -47,7 +36,7 @@ public class MainGame : MonoBehaviour
             Invoke("UpdateGameOverSettings", 1);
         } else if(lastPlayer == PlayerStatus.You) {
             gameOverClipName = AudioClipName.PlayerLost;
-            gameOverText = lastPlayer.ToString() + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";      
+            gameOverText = Opponent.CharacterName + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";      
             Invoke("UpdateGameOverSettings", 2.2f);
         } else {
             gameOverClipName = AudioClipName.PlayerWon;
@@ -59,8 +48,8 @@ public class MainGame : MonoBehaviour
     }
 
     private void UpdateGameOverSettings(){
-        scoreboard = GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject;
-        Instantiate(gameOverCanvas, GameObject.FindWithTag("MainCanvas").transform);
+        GameObject scoreboard = GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject;
+        ScreenManager.GetInstance().InstantiateScreen(CanvasName.GameOver, GameObject.FindWithTag("MainCanvas").transform);
         GameObject.FindWithTag("GameOverCanvas").GetComponent<GameOverCanvas>().updateTextandPlaySound(gameOverText, gameOverClipName);
         switch(gameOverStatus){
             case GameStatus.tied:
@@ -73,6 +62,11 @@ public class MainGame : MonoBehaviour
                 scoreboard.GetComponent<Scoreboard>().PlayerWon();
                 break;
         }
+    }
+
+    public void DisplayScoreMessage(){
+        ScreenManager.GetInstance().InstantiateScreen(CanvasName.ScoreMessage, GameObject.FindWithTag("MainCanvas").transform);
+        GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject.GetComponent<Scoreboard>().SetScoreMessage();
     }
 }
 
