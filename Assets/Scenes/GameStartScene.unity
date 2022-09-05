@@ -134,6 +134,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 105.71631
       objectReference: {fileID: 0}
+    - target: {fileID: 4536038363685465880, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536038363685465880, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 802.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536038363685465880, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4536038363685465880, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 45.893
+      objectReference: {fileID: 0}
     - target: {fileID: 5656377128305872634, guid: e322b827492544d358f620321e520c63, type: 3}
       propertyPath: m_text
       value: 'Wanna play with friends?
@@ -231,6 +247,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 8902465076671532765, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1509269041}
+    - target: {fileID: 8902465076671532765, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: goToUrl
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e322b827492544d358f620321e520c63, type: 3}
 --- !u!1 &676062654
@@ -301,6 +325,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509269041 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8890167167530302358, guid: e322b827492544d358f620321e520c63, type: 3}
+  m_PrefabInstance: {fileID: 282531330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97a7ef808989d4532b5623deeadfa9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1562737618
 GameObject:
   m_ObjectHideFlags: 0
