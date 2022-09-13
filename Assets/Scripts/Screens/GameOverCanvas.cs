@@ -12,8 +12,6 @@ public class GameOverCanvas : MonoBehaviour
         textComponent = transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>(); 
     }
 
-
-
     public void updateTextandPlaySound(string text, AudioClipName name){
         textComponent.text = text;
         SoundManager.PlayClipByName(name);
@@ -29,5 +27,6 @@ public class GameOverCanvas : MonoBehaviour
     public void Menu(){
         SoundManager.Stop();
         Camera.main.GetComponent<MainGame>().DisplayScoreMessage();
+        Destroy(gameObject);
     }
 }

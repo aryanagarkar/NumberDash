@@ -16,11 +16,11 @@ public class Scoreboard : MonoBehaviour
 
     void Awake(){
       you = transform.Find("You").gameObject.GetComponent<TextMeshProUGUI>();
-      you.text = "You";
+      you.text = "You:";
       yourScoreText = transform.Find("You").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
 
       computer = transform.Find("Computer").gameObject.GetComponent<TextMeshProUGUI>();
-      computer.text = Opponent.CharacterName;
+      computer.text = Opponent.CharacterName + ":";
       computerScoreText =  transform.Find("Computer").GetChild(0).gameObject.GetComponent<TextMeshProUGUI>(); 
 
       yourScoreText.text = yourScore.ToString();
@@ -54,7 +54,7 @@ public class Scoreboard : MonoBehaviour
             messageText.text = "You are winning!\nAre you sure you want to quit?";
         }
         if(yourScore == computerScore){
-            messageText.text = "You are Tied!\nAre you sure you want to quit?";
+            messageText.text = "You are tied!\nAre you sure you want to quit?";
         }
     }
 

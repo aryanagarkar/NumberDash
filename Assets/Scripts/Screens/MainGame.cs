@@ -12,6 +12,10 @@ public class MainGame : MonoBehaviour
 
 
     public void playAgain(){
+         GameObject scoreboard = GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject;
+         if(GameObject.FindWithTag("GameBoard").GetComponent<GameBoard>().ActiveGame){
+            scoreboard.GetComponent<Scoreboard>().ComputerWon();
+         }
          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -37,11 +41,11 @@ public class MainGame : MonoBehaviour
             Invoke("UpdateGameOverSettings", 1);
         } else if(lastPlayer == PlayerStatus.You) {
             gameOverClipName = AudioClipName.PlayerLost;
-            gameOverText = Opponent.CharacterName + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";      
+            gameOverText = PlayerStatus.You.ToString() + " lost! " + losingNumber.GetComponent<Tile>().Number + " can't be placed next to " + neighbor.GetComponent<Tile>().Number + ".";      
             Invoke("UpdateGameOverSettings", 2.2f);
         } else {
             gameOverClipName = AudioClipName.PlayerWon;
-            gameOverText = PlayerStatus.You.ToString() + " won! " + oppponentName + " played " + losingNumber.GetComponent<Tile>().Number + " next to " + neighbor.GetComponent<Tile>().Number + ".";
+            gameOverText = PlayerStatus.You.ToString() + " won! " + Opponent.CharacterName + " played " + losingNumber.GetComponent<Tile>().Number + " next to " + neighbor.GetComponent<Tile>().Number + ".";
             Invoke("UpdateGameOverSettings", 2.2f);
             //gameOverDelay.Duration = 2.2f;
             gameOverStatus = GameStatus.won;
