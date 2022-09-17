@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainGame : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class MainGame : MonoBehaviour
     string gameOverText;
     AudioClipName gameOverClipName;
     GameStatus gameOverStatus;
+    Button reloadButton;
 
-
+    void Awake() {
+        reloadButton = GameObject.FindWithTag("MainCanvas").transform.Find("ButtonPanel").Find("ReloadIcon").gameObject.GetComponent<Button>();
+    }
     public void playAgain(){
          GameObject scoreboard = GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject;
          if(GameObject.FindWithTag("GameBoard").GetComponent<GameBoard>().ActiveGame){
@@ -34,6 +38,7 @@ public class MainGame : MonoBehaviour
     }
 
     public void gameOver(PlayerStatus lastPlayer, GameStatus gameStatus, string oppponentName, GameObject losingNumber, GameObject neighbor){
+        reloadButton.interactable = false;
         gameOverStatus = gameStatus;
         if (gameStatus == GameStatus.tied) {
             gameOverClipName = AudioClipName.Tied;

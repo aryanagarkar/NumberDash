@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Instructions : MonoBehaviour
 {
-    Dictionary<int, GameObject> pages = new Dictionary<int, GameObject>(); 
+   /* Dictionary<int, GameObject> pages = new Dictionary<int, GameObject>(); 
     GameObject page1;
     GameObject page2;
     int currentPageIndex;
@@ -33,5 +33,5 @@ public class Instructions : MonoBehaviour
         nextPage.SetActive(true);
         pages.ElementAt(currentPageIndex).Value.SetActive(false);
         currentPageIndex = previousPageIndex;
-    }
+    }*/
 }

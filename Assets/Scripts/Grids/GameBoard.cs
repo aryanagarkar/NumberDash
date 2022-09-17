@@ -81,7 +81,7 @@ public class GameBoard : MonoBehaviour
     }
 
     public void PlaceTile(){
-        KeyValuePair<string, GameObject> validSlotToPlay = new KeyValuePair<string, GameObject>();
+        GameObject validSlotToPlay = null;
         switch (selectedLevel)
         {
             case Level.Medium :
@@ -97,25 +97,34 @@ public class GameBoard : MonoBehaviour
             }
              break;
         }
-        validSlotToPlay.Value.GetComponent<Slot>().DropTile(computersTileToPlace);
+        validSlotToPlay.GetComponent<Slot>().DropTile(computersTileToPlace);
+        
     }
 
-    private KeyValuePair<string, GameObject> GetValidSlotForTile(GameObject tile){
+    private GameObject GetValidSlotForTile(GameObject tile){
+        List<GameObject> validSlots = new List<GameObject>();
         for(int i = 0; i < emptySlots.Count; i++){
             KeyValuePair<string, GameObject> emptySlot = emptySlots.ElementAt(i);
             GameObject slotObject = emptySlot.Value;
             bool invalid = slotObject.GetComponent<Slot>().checkForAllConsecutiveSlots(tile);
             if(invalid == false){
-                return emptySlot;
+                validSlots.Add(slotObject);
             }
         }
-        int index = Random.Range(0, emptySlots.Count);
-        return emptySlots.ElementAt(index);
+        
+        if(validSlots.Count == 0) {
+            int index = Random.Range(0, emptySlots.Count);
+            return emptySlots.ElementAt(index).Value;
+        } else {
+            int index = Random.Range(0, validSlots.Count);
+            return validSlots[index];
+        }
+        
     }
 
-     private KeyValuePair<string, GameObject> GetRandomSlot(GameObject tile){
+     private GameObject GetRandomSlot(GameObject tile){
         int index = Random.Range(0, emptySlots.Count - 1);
-        return emptySlots.ElementAt(index);
+        return emptySlots.ElementAt(index).Value;
     }
     
     private void moveEmptySlotToOccupied(string slotKey) {
