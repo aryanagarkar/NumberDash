@@ -8,61 +8,74 @@ public class ScreenManager : MonoBehaviour
     private static ScreenManager instance = null;
 
     GameObject levelPanel;
+    GameObject typeOfGamePanel;
     GameObject settings;
     GameObject instructionsPage;
     GameObject characterPanel;
     GameObject gameOver;
     GameObject scoreMessage;
 
-    public static ScreenManager GetInstance() {
-        if (instance == null) {
+    public static ScreenManager GetInstance()
+    {
+        if (instance == null)
+        {
             instance = new ScreenManager();
         }
         return instance;
-    } 
+    }
 
     void Awake()
     {
-        if(instance == null){
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
-        }else if(instance != this){
+        }
+        else if (instance != this)
+        {
             Destroy(this.gameObject);
             return;
         }
 
-        levelPanel = Resources.Load<GameObject>("Prefabs/Canvases/LevelPanel"); 
-        settings = Resources.Load<GameObject>("Prefabs/Canvases/Settings"); 
-        instructionsPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage"); 
-        characterPanel = Resources.Load<GameObject>("Prefabs/Canvases/CharacterPanel"); 
-        gameOver = Resources.Load<GameObject>("Prefabs/Canvases/GameOver"); 
-        scoreMessage = Resources.Load<GameObject>("Prefabs/Canvases/ScoreMessage"); 
+        levelPanel = Resources.Load<GameObject>("Prefabs/Canvases/LevelPanel");
+        typeOfGamePanel = Resources.Load<GameObject>("Prefabs/Canvases/TypeOfGamePanel");
+        settings = Resources.Load<GameObject>("Prefabs/Canvases/Settings");
+        instructionsPage = Resources.Load<GameObject>("Prefabs/Canvases/InstructionsPage");
+        characterPanel = Resources.Load<GameObject>("Prefabs/Canvases/CharacterPanel");
+        gameOver = Resources.Load<GameObject>("Prefabs/Canvases/GameOver");
+        scoreMessage = Resources.Load<GameObject>("Prefabs/Canvases/ScoreMessage");
     }
 
-    public void GoToScene(SceneName name){
+    public void GoToScene(SceneName name)
+    {
         SceneManager.LoadScene(name.ToString());
     }
 
-    public void InstantiateScreen(CanvasName name, Transform parent){
-        switch(name){
+    public void InstantiateScreen(CanvasName name, Transform parent)
+    {
+        switch (name)
+        {
             case CanvasName.LevelPanel:
-                 Instantiate(levelPanel, parent);
-                 break;
+                Instantiate(levelPanel, parent);
+                break;
+            case CanvasName.TypeOfGamePanel:
+                Instantiate(typeOfGamePanel, parent);
+                break;
             case CanvasName.Settings:
-                 Instantiate(settings, parent);
-                 break;
+                Instantiate(settings, parent);
+                break;
             case CanvasName.InstructionsPage:
-                 Instantiate(instructionsPage, parent);
-                 break;
+                Instantiate(instructionsPage, parent);
+                break;
             case CanvasName.CharacterPanel:
-                 Instantiate(characterPanel, parent);
-                 break;
+                Instantiate(characterPanel, parent);
+                break;
             case CanvasName.GameOver:
-                 Instantiate(gameOver, parent);
-                 break;
+                Instantiate(gameOver, parent);
+                break;
             case CanvasName.ScoreMessage:
-                 Instantiate(scoreMessage, parent);
-                 break;
+                Instantiate(scoreMessage, parent);
+                break;
         }
     }
 }
