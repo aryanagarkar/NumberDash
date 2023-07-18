@@ -18,6 +18,7 @@ TagManager:
   - DropTileText
   - PickTileText
   - ScoreMessage
+  - PersistentObject
   layers:
   - Default
   - TransparentFX

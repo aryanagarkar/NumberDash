@@ -6,11 +6,12 @@ public class LevelPanel : MonoBehaviour
 {
     public void EasyLevelSelected(){
         Destroy(gameObject);
-        transform.parent.GetComponent<GameStartCanvas>().EasyButtonClicked();
+        Debug.Log(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>());
+        GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().EasyButtonClicked();
     }
 
     public void MediumLevelSelected(){
         Destroy(gameObject);
-        transform.parent.GetComponent<GameStartCanvas>().MediumButtonClicked();
+        GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().MediumButtonClicked();
     }
 }

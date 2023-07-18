@@ -15,6 +15,6 @@ public class Opponent : MonoBehaviour, IPointerClickHandler
         CharacterToPlayWith = GetComponent<Image>().sprite;
         CharacterName = transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
         SoundManager.PlayClipByName(AudioClipName.ButtonClick);
-        GameObject.FindWithTag("GameStartCanvas").GetComponent<GameStartCanvas>().goToMainGame();
+        GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().goToMainGame();
     }
 }

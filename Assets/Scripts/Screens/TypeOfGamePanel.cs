@@ -13,6 +13,6 @@ public class TypeOfGamePanel : MonoBehaviour
     public void MemorySelected()
     {
         Destroy(gameObject);
-        transform.parent.GetComponent<GameStartCanvas>().MemoryPlayClicked();
+        GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().MemoryPlayClicked();
     }
 }

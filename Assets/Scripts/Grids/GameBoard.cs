@@ -25,7 +25,7 @@ public class GameBoard : MonoBehaviour
         {
             emptySlots.Add(child.gameObject.name, child.gameObject);
         }
-        selectedLevel = GameStartCanvas.level;
+        selectedLevel = GameManager.level;
         dropTimer = gameObject.AddComponent<Timer>();
         activeGame = true;
         GetComponent<TurnManager>().StartGame();
