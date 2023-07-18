@@ -49,11 +49,11 @@ public class GameBoard : MonoBehaviour
         if (isLost) {
             SoundManager.PlayAudioXTimes(AudioClipName.Alarm, 1);
             PlayLostAnimation(currentNumber, neighbor);
-            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.lost, "Opponent", currentNumber, neighbor);
+            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.Lost, "Opponent", currentNumber, neighbor);
             activeGame = false;
             GetComponent<TurnManager>().EndGame();
         } else if(emptySlots.Count == 0) {
-            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.tied, "Opponent", null, null);
+            Camera.main.GetComponent<MainGame>().gameOver(currentPlayer, GameStatus.Tied, "Opponent", null, null);
             activeGame = false;
             GetComponent<TurnManager>().EndGame();
         } else { 

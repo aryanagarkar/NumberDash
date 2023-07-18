@@ -40,7 +40,7 @@ public class MainGame : MonoBehaviour
     public void gameOver(PlayerStatus lastPlayer, GameStatus gameStatus, string oppponentName, GameObject losingNumber, GameObject neighbor){
         reloadButton.interactable = false;
         gameOverStatus = gameStatus;
-        if (gameStatus == GameStatus.tied) {
+        if (gameStatus == GameStatus.Tied) {
             gameOverClipName = AudioClipName.Tied;
             gameOverText = "It was a tie!";
             Invoke("UpdateGameOverSettings", 1);
@@ -53,7 +53,7 @@ public class MainGame : MonoBehaviour
             gameOverText = PlayerStatus.You.ToString() + " won! " + Opponent.CharacterName + " played " + losingNumber.GetComponent<Tile>().Number + " next to " + neighbor.GetComponent<Tile>().Number + ".";
             Invoke("UpdateGameOverSettings", 2.2f);
             //gameOverDelay.Duration = 2.2f;
-            gameOverStatus = GameStatus.won;
+            gameOverStatus = GameStatus.Won;
         }
     }
 
@@ -62,13 +62,13 @@ public class MainGame : MonoBehaviour
         ScreenManager.GetInstance().InstantiateScreen(CanvasName.GameOver, GameObject.FindWithTag("MainCanvas").transform);
         GameObject.FindWithTag("GameOverCanvas").GetComponent<GameOverCanvas>().updateTextandPlaySound(gameOverText, gameOverClipName);
         switch(gameOverStatus){
-            case GameStatus.tied:
+            case GameStatus.Tied:
                 scoreboard.GetComponent<Scoreboard>().GameTied();
                 break;
-            case GameStatus.lost:
+            case GameStatus.Lost:
                 scoreboard.GetComponent<Scoreboard>().ComputerWon();
                 break;
-            case GameStatus.won:
+            case GameStatus.Won:
                 scoreboard.GetComponent<Scoreboard>().PlayerWon();
                 break;
         }

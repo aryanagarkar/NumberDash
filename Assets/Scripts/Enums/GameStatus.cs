@@ -1,6 +1,6 @@
 public enum GameStatus
 {
-    lost,
-    tied,
-    won
+    Lost,
+    Tied,
+    Won
 }
