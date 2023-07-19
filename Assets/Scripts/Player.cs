@@ -30,7 +30,7 @@ public class Player : MonoBehaviour, IPointerClickHandler
             PlayerPrefs.SetString("Avatar", "PB");
             return AssetLoader.GetInstance().DefaultPlayer;
         }
-        return AssetLoader.GetInstance().GetSpriteByName(PlayerPrefs.GetString("Avatar"));
+        return AssetLoader.GetInstance().GetCharacterSpriteByName(PlayerPrefs.GetString("Avatar"));
     }
 
     public bool isSelected()
@@ -51,14 +51,14 @@ public class Player : MonoBehaviour, IPointerClickHandler
         {
             imageName = name + "Selected";
             PlayerPrefs.SetString("Avatar", name);
-            playerCharacter = AssetLoader.GetInstance().GetSpriteByName(PlayerPrefs.GetString("Avatar"));
+            playerCharacter = AssetLoader.GetInstance().GetCharacterSpriteByName(PlayerPrefs.GetString("Avatar"));
             GameObject.FindWithTag("Settings").GetComponent<SettingsPage>().PlayerAvatarSelected(name);
         }
         else
         {
             imageName = name + "Circle";
         }
-        GetComponent<Image>().sprite = AssetLoader.GetInstance().GetSpriteByName(imageName);
+        GetComponent<Image>().sprite = AssetLoader.GetInstance().GetCharacterSpriteByName(imageName);
     }
 
     public void OnPointerClick(PointerEventData eventData)

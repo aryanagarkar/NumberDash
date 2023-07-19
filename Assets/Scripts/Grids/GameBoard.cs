@@ -69,12 +69,12 @@ public class GameBoard : MonoBehaviour
     }
 
     public void PlayComputersTurn() {
-        Sprite s = transform.parent.GetComponent<MainCanvas>().PickRandomSprite();
         computersTileToPlace = transform.parent.GetComponent<MainCanvas>().GetTileToPlay();
+        Sprite s = GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().GetSpriteForTile(computersTileToPlace);
+        computersTileToPlace.GetComponent<Tile>().SetSprite(s);
         computersTileToPlace.GetComponent<Animator>().enabled = true;
         computersTileToPlace.GetComponent<Animator>().Play("TileFlip", 0, 0f);
         SoundManager.PlayClipByName(AudioClipName.Swoosh);
-        computersTileToPlace.GetComponent<Tile>().SetSprite(s);
         int lower = 9 % (NumberGrid.GetRemainingTilesCount());
         int duration = Random.Range(lower+1, lower+2);
         Invoke("PlaceTile", duration);
@@ -136,8 +136,8 @@ public class GameBoard : MonoBehaviour
     private void highlightLatestPlayedTile(GameObject latestTile) {
         // Change the Tile Image Sprite to Highlighted One
         string highlightedSpriteName = latestTile.GetComponent<Image>().sprite.name + "H";
-        if (transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName) != null) {
-            latestTile.GetComponent<Image>().sprite = transform.parent.GetComponent<MainCanvas>().GetHighlightedSpriteByName(highlightedSpriteName);
+        if (GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().GetHighlightedSpriteByName(highlightedSpriteName) != null) {
+            latestTile.GetComponent<Image>().sprite = GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().GetHighlightedSpriteByName(highlightedSpriteName);
             // Reset the sprite for the last dropped tile back to normal
             //latestTile.GetComponent<NicerOutline>().enabled = true;
             if(lastDroppedTile != null) {

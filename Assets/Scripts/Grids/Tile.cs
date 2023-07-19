@@ -61,7 +61,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             tileFlip.enabled = true;
             tileFlip.Play("TileFlip", 0, 0f);
             SoundManager.PlayClipByName(AudioClipName.Swoosh);
-            Sprite s = GameObject.FindWithTag("MainCanvas").GetComponent<MainCanvas>().PickRandomSprite();
+            Sprite s = transform.parent.gameObject.GetComponent<NumberGrid>().GetSpriteForTile(gameObject);
             SetSprite(s);
             Tile.openTile = gameObject;
             GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().TilePickedbyPlayer();

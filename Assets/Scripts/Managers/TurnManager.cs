@@ -70,7 +70,7 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            playerSprite = AssetLoader.GetInstance().GetSpriteByName(PlayerPrefs.GetString("Avatar"));      
+            playerSprite = AssetLoader.GetInstance().GetCharacterSpriteByName(PlayerPrefs.GetString("Avatar"));      
         }
 
         // Enabling the visuals for playing character

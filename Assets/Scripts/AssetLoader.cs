@@ -4,32 +4,49 @@ using UnityEngine;
 
 public class AssetLoader : MonoBehaviour
 {
-     private static AssetLoader instance = null;
+    private static AssetLoader instance = null;
 
     //Sprites
     Sprite defaultPlayer;
     Dictionary<string, Sprite> characters;
-
-    public static AssetLoader GetInstance() {
+    Sprite blankSprite;
+    List<Sprite> numbers = new List<Sprite>();
+    Dictionary<string, Sprite> highlightedSprites;
+    public static AssetLoader GetInstance()
+    {
         return instance;
     }
 
-    public Sprite DefaultPlayer{
-        get{
+    public Sprite DefaultPlayer
+    {
+        get
+        {
             return defaultPlayer;
         }
     }
 
-    public Sprite GetSpriteByName(string name) {
+    public Dictionary<string, Sprite> Characters
+    {
+        get
+        {
+            return characters;
+        }
+    }
+
+    public Sprite GetCharacterSpriteByName(string name)
+    {
         return characters[name];
     }
 
     void Awake()
     {
-        if(instance == null){
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
-        } else if(instance != this){
+        }
+        else if (instance != this)
+        {
             Destroy(this.gameObject);
             return;
         }
@@ -46,12 +63,48 @@ public class AssetLoader : MonoBehaviour
         characters.Add("OB", Resources.Load<Sprite>("Sprites/OB"));
         characters.Add("OM", Resources.Load<Sprite>("Sprites/OM"));
         characters.Add("OD", Resources.Load<Sprite>("Sprites/OD"));
+
+        blankSprite = Resources.Load<Sprite>("Sprites/BlankTileSprite");
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile1"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile2"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile3"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile4"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile5"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile6"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile7"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile8"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile9"));
+
+        highlightedSprites = new Dictionary<string, Sprite>();
+        highlightedSprites.Add("Tile1H", Resources.Load<Sprite>("Sprites/Tile1H"));
+        highlightedSprites.Add("Tile2H", Resources.Load<Sprite>("Sprites/Tile2H"));
+        highlightedSprites.Add("Tile3H", Resources.Load<Sprite>("Sprites/Tile3H"));
+        highlightedSprites.Add("Tile4H", Resources.Load<Sprite>("Sprites/Tile4H"));
+        highlightedSprites.Add("Tile5H", Resources.Load<Sprite>("Sprites/Tile5H"));
+        highlightedSprites.Add("Tile6H", Resources.Load<Sprite>("Sprites/Tile6H"));
+        highlightedSprites.Add("Tile7H", Resources.Load<Sprite>("Sprites/Tile7H"));
+        highlightedSprites.Add("Tile8H", Resources.Load<Sprite>("Sprites/Tile8H"));
+        highlightedSprites.Add("Tile9H", Resources.Load<Sprite>("Sprites/Tile9H"));
     }
 
+    public Sprite GetHighlightedSpriteByName(string name)
+    {
+        return highlightedSprites[name];
+    }
 
-    public Dictionary<string, Sprite> Characters{
-        get{
-            return characters;
-        }
+    /*public Sprite ResetSprite(Sprite sprite)
+    {
+        numbers.Add(sprite);
+        return blankSprite;
+    }*/
+
+    public Sprite PickRandomSprite()
+    {
+        int index = Random.Range(0, numbers.Count);
+        Debug.Log(index);
+        Debug.Log(numbers.Count);
+        Sprite s = numbers[index];
+        numbers.Remove(s);
+        return s;
     }
 }

@@ -12,11 +12,6 @@ public class GameManager : MonoBehaviour
         LoadPlayerPrefValues();
     }
 
-    void Update()
-    {
-
-    }
-
     private void LoadPlayerPrefValues()
     {
         if (PlayerPrefs.HasKey("VolumeValue"))
