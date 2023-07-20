@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         LoadPlayerPrefValues();
+    }
+
+    public GameType Type {
+        get { return type; }
     }
 
     private void LoadPlayerPrefValues()
@@ -28,8 +32,8 @@ public class GameManager : MonoBehaviour
     public void goToMainGame()
     {
         ScreenManager.GetInstance().GoToScene(SceneName.MainGameBoard);
-        //play memory if memory is chosen
     }
+    
     public void EasyButtonClicked()
     {
         type = GameType.Original;
@@ -47,6 +51,6 @@ public class GameManager : MonoBehaviour
     public void MemoryPlayClicked()
     {
         type = GameType.Memory;
-        //ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
     }
 }

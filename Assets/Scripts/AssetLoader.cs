@@ -101,8 +101,6 @@ public class AssetLoader : MonoBehaviour
     public Sprite PickRandomSprite()
     {
         int index = Random.Range(0, numbers.Count);
-        Debug.Log(index);
-        Debug.Log(numbers.Count);
         Sprite s = numbers[index];
         numbers.Remove(s);
         return s;

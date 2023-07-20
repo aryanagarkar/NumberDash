@@ -9,6 +9,13 @@ public class MainCanvas : MonoBehaviour
     void Awake()
     {
         numberGrid = GameObject.FindWithTag("NumberGrid");
+        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
+            launchMemoryVersion();
+        }
+    }
+
+    public void launchMemoryVersion(){
+        Debug.Log("Memory Play");
     }
 
     public GameObject GetTileToPlay()
