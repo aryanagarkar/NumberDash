@@ -12,6 +12,7 @@ public class AssetLoader : MonoBehaviour
     Sprite blankSprite;
     List<Sprite> numbers = new List<Sprite>();
     Dictionary<string, Sprite> highlightedSprites;
+
     public static AssetLoader GetInstance()
     {
         return instance;
@@ -65,15 +66,8 @@ public class AssetLoader : MonoBehaviour
         characters.Add("OD", Resources.Load<Sprite>("Sprites/OD"));
 
         blankSprite = Resources.Load<Sprite>("Sprites/BlankTileSprite");
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile1"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile2"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile3"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile4"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile5"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile6"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile7"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile8"));
-        numbers.Add(Resources.Load<Sprite>("Sprites/Tile9"));
+
+        populateNumberSprites();
 
         highlightedSprites = new Dictionary<string, Sprite>();
         highlightedSprites.Add("Tile1H", Resources.Load<Sprite>("Sprites/Tile1H"));
@@ -85,6 +79,18 @@ public class AssetLoader : MonoBehaviour
         highlightedSprites.Add("Tile7H", Resources.Load<Sprite>("Sprites/Tile7H"));
         highlightedSprites.Add("Tile8H", Resources.Load<Sprite>("Sprites/Tile8H"));
         highlightedSprites.Add("Tile9H", Resources.Load<Sprite>("Sprites/Tile9H"));
+    }
+
+    private void populateNumberSprites(){
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile1"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile2"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile3"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile4"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile5"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile6"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile7"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile8"));
+        numbers.Add(Resources.Load<Sprite>("Sprites/Tile9"));
     }
 
     public Sprite GetHighlightedSpriteByName(string name)
@@ -100,6 +106,9 @@ public class AssetLoader : MonoBehaviour
 
     public Sprite PickRandomSprite()
     {
+        if(numbers.Count == 0){
+            populateNumberSprites();
+        }
         int index = Random.Range(0, numbers.Count);
         Sprite s = numbers[index];
         numbers.Remove(s);
