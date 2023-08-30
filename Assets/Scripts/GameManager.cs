@@ -33,18 +33,15 @@ public class GameManager : MonoBehaviour
     {
         ScreenManager.GetInstance().GoToScene(SceneName.MainGameBoard);
     }
-    
-    public void EasyButtonClicked()
-    {
-        type = GameType.Original;
-        level = Level.Easy;
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
-    }
 
-    public void MediumButtonClicked()
-    {
+    public void OriginalPlayClicked(){
         type = GameType.Original;
-        level = Level.Medium;
+        ScreenManager.GetInstance().InstantiateScreen(CanvasName.LevelPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+    }
+    
+    public void LevelButtonClicked(Level levelName)
+    {
+        level = levelName;
         ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
     }
 

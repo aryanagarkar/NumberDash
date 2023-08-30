@@ -28,7 +28,6 @@ public class GameBoard : MonoBehaviour
         selectedLevel = GameManager.level;
         dropTimer = gameObject.AddComponent<Timer>();
         activeGame = true;
-        GetComponent<TurnManager>().StartGame();
     }
 
     public bool ActiveGame {

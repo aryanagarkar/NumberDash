@@ -7,7 +7,7 @@ public class TypeOfGamePanel : MonoBehaviour
     public void OriginalSelected()
     {
         Destroy(gameObject);
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.LevelPanel, transform.parent);
+        GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().OriginalPlayClicked();
     }
 
     public void MemorySelected()

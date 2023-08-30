@@ -57,7 +57,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(!IsMovable()) {
             return;
         }
-        if(!hasSprite) {
+        if(!hasSprite || GetComponent<Image>().sprite == GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().BlankSprite) {
             tileFlip.enabled = true;
             tileFlip.Play("TileFlip", 0, 0f);
             SoundManager.PlayClipByName(AudioClipName.Swoosh);
@@ -89,6 +89,10 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         name = name.Replace("Tile", "");
         number = int.Parse(name);
         hasSprite = true;
+    }
+
+    public void ResetSpriteToBlank(){
+        GetComponent<Image>().sprite = GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().BlankSprite;
     }
 
     public void OnDrag(PointerEventData eventData){

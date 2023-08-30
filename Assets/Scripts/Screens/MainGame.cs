@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class MainGame : MonoBehaviour
 {
-
     string gameOverText;
     AudioClipName gameOverClipName;
     GameStatus gameOverStatus;

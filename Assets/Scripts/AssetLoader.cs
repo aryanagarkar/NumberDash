@@ -34,6 +34,12 @@ public class AssetLoader : MonoBehaviour
         }
     }
 
+    public Sprite BlankSprite{
+        get{
+            return blankSprite;
+        }
+    }
+
     public Sprite GetCharacterSpriteByName(string name)
     {
         return characters[name];
@@ -98,11 +104,6 @@ public class AssetLoader : MonoBehaviour
         return highlightedSprites[name];
     }
 
-    /*public Sprite ResetSprite(Sprite sprite)
-    {
-        numbers.Add(sprite);
-        return blankSprite;
-    }*/
 
     public Sprite PickRandomSprite()
     {

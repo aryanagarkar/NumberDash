@@ -59,7 +59,6 @@ public class TurnManager : MonoBehaviour
         // Objects to animate on top of characters (Clock on top of computer and "You Play" text on top of player)
         clock = character.transform.Find("Clock").gameObject;
         clockAnim = clock.transform.GetChild(0).gameObject.GetComponent<Animator>();
-        youPlayText = character.transform.Find("YouPlay").gameObject;
 
         // Setting sprites for player and computer
         computerSprite = Opponent.CharacterToPlayWith;
@@ -86,13 +85,17 @@ public class TurnManager : MonoBehaviour
     * character to play
     */
     public void StartGame() {
+        PlayTurn(true);
+    }
+
+     public void GameSetUp() {
         int currentPlayerIndex = Random.Range(1, 10) % 2;
         if(!PlayerPrefs.HasKey("PlayTutorial") || PlayerPrefs.GetInt("PlayTutorial") == 1){
             currentPlayerIndex = 1;
             runTutorial = true;
         } 
         currentPlayer = (PlayerStatus)currentPlayerIndex;
-        PlayTurn(true);
+        SetCharacter();
     }
 
     public void EndGame() {
@@ -115,12 +118,19 @@ public class TurnManager : MonoBehaviour
         Invoke("PlayTurnDelay", 1);
     }
 
-    private void PlayTurn(bool firstMoveOfTheGame){
-         if (currentPlayer == PlayerStatus.You) {
-            ActivatePlayerSpecificUISettings();
-            textComponent.text = "You Play First!";  
+    private void SetCharacter(){
+        if (currentPlayer == PlayerStatus.You) {
+            ActivatePlayerSpecificUISettings(); 
         } else {
             ActivateComputerSpecificUISettings();
+        }
+    }
+
+    private void PlayTurn(bool firstMoveOfTheGame){
+        SetCharacter();
+        if (currentPlayer == PlayerStatus.You) {
+            textComponent.text = "You Play First!";  
+        } else {
             textComponent.text = computerName + " Plays First";
             Invoke("PlayComputersTurnDelay", 1);
         }
@@ -138,6 +148,7 @@ public class TurnManager : MonoBehaviour
     
     private void PlayTurnDelay() {
         characterAnimator.Play("FadeIn", 0, 0f);
+
         PlayTurn(false);
     }
 
@@ -148,7 +159,6 @@ public class TurnManager : MonoBehaviour
     }
 
     private void ActivateComputerSpecificUISettings() {
-        DeactivatePlayerSpecificUISettings();
         characterImage.sprite = computerSprite;
         clock.SetActive(true);
         clockAnim.enabled = true;
@@ -162,11 +172,6 @@ public class TurnManager : MonoBehaviour
     private void ActivatePlayerSpecificUISettings() {
         DeactivateComputerSpecificUISettings();
         characterImage.sprite = playerSprite;
-        youPlayText.SetActive(true);
-    }
-
-    private void DeactivatePlayerSpecificUISettings() {
-        youPlayText.SetActive(false);
     }
 
     // Events For Running Tutorial

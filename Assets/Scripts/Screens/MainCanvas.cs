@@ -5,17 +5,33 @@ using UnityEngine;
 public class MainCanvas : MonoBehaviour
 {
     GameObject numberGrid;
+    Timer memoryTimer;
 
     void Awake()
     {
         numberGrid = GameObject.FindWithTag("NumberGrid");
-        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
-            launchMemoryVersion();
+        memoryTimer = gameObject.AddComponent<Timer>();
+        memoryTimer.Duration = 10;
+        GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().GameSetUp();
+        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Original){
+            GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().StartGame();
+        }
+        else if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
+            launchMemoryVersionDelay();
         }
     }
 
-    public void launchMemoryVersion(){
-        Debug.Log("Memory Play");
+    void Update(){
+        if(memoryTimer.Finished){
+            memoryTimer.Stop();
+            GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().flipTilesFaceDown();
+            GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().StartGame();
+        }
+    }
+
+    public void launchMemoryVersionDelay(){
+        GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().flipTilesFaceUp();
+        memoryTimer.Run();
     }
 
     public GameObject GetTileToPlay()

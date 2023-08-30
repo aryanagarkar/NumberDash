@@ -37,4 +37,24 @@ public class NumberGrid : MonoBehaviour
     {
         numberOfTilesNotPlacedYet -= 1;
     }
+
+    public void flipTilesFaceUp(){
+        for(int i = 0; i < transform.childCount; i++){
+            GameObject tile = transform.GetChild(i).gameObject;
+            tile.GetComponent<Tile>().SetSprite(tileNumbers[transform.GetChild(i).gameObject]);
+            tile.GetComponent<Animator>().enabled = true;
+            tile.GetComponent<Animator>().Play("TileFlip", 0, 0f);
+            SoundManager.PlayClipByName(AudioClipName.Swoosh);
+        }
+    }
+
+    public void flipTilesFaceDown(){
+        for(int i = 0; i < transform.childCount; i++){
+            GameObject tile = transform.GetChild(i).gameObject;
+            tile.GetComponent<Tile>().ResetSpriteToBlank();
+            tile.GetComponent<Animator>().enabled = true;
+            tile.GetComponent<Animator>().Play("TileFlip", 0, 0f);
+            SoundManager.PlayClipByName(AudioClipName.Swoosh);
+        }
+    }
 }
