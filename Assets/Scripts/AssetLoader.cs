@@ -12,6 +12,7 @@ public class AssetLoader : MonoBehaviour
     Sprite blankSprite;
     List<Sprite> numbers = new List<Sprite>();
     Dictionary<string, Sprite> highlightedSprites;
+    GameObject container;
 
     public static AssetLoader GetInstance()
     {
@@ -85,6 +86,8 @@ public class AssetLoader : MonoBehaviour
         highlightedSprites.Add("Tile7H", Resources.Load<Sprite>("Sprites/Tile7H"));
         highlightedSprites.Add("Tile8H", Resources.Load<Sprite>("Sprites/Tile8H"));
         highlightedSprites.Add("Tile9H", Resources.Load<Sprite>("Sprites/Tile9H"));
+
+        container = Resources.Load<GameObject>("Prefabs/Grids/Container");
     }
 
     private void populateNumberSprites(){
@@ -97,6 +100,13 @@ public class AssetLoader : MonoBehaviour
         numbers.Add(Resources.Load<Sprite>("Sprites/Tile7"));
         numbers.Add(Resources.Load<Sprite>("Sprites/Tile8"));
         numbers.Add(Resources.Load<Sprite>("Sprites/Tile9"));
+    }
+
+    public GameObject Container
+    {
+        get {
+            return container;
+        }
     }
 
     public Sprite GetHighlightedSpriteByName(string name)

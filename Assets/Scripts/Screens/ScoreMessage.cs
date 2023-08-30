@@ -11,8 +11,6 @@ public class ScoreMessage : MonoBehaviour
 
     public void PlayAgain(){
         SoundManager.Stop();
-        GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().ShowAd((isSuccess) => {
-            Camera.main.GetComponent<MainGame>().playAgain();
-        }); 
+        Camera.main.GetComponent<MainGame>().playAgain(); 
     }
 }

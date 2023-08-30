@@ -44,6 +44,13 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void Start(){
         tileFlip = GetComponent<Animator>();
+        siblingIndex = transform.GetSiblingIndex();
+    }
+
+    public int SiblingIndex {
+        get{
+            return siblingIndex;
+        }
     }
 
 
@@ -73,7 +80,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
            }
         dragStarted = true;
-        siblingIndex = transform.GetSiblingIndex();
+
         transform.SetAsLastSibling();
     
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);

@@ -102,7 +102,6 @@ public class TurnManager : MonoBehaviour
         PlayerPrefs.SetInt("PlayTutorial", 0);
         
         // Just loading the ads in anticipation of playing it, if the user chooses to play more
-        GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().LoadAd();
         ResetAnimations();
     }
  
@@ -148,7 +147,6 @@ public class TurnManager : MonoBehaviour
     
     private void PlayTurnDelay() {
         characterAnimator.Play("FadeIn", 0, 0f);
-
         PlayTurn(false);
     }
 

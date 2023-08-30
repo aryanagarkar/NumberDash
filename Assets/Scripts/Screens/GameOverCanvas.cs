@@ -19,9 +19,7 @@ public class GameOverCanvas : MonoBehaviour
 
     public void playAgain(){
         SoundManager.Stop();
-        GameObject.Find("PersistentObject").GetComponent<InterstitialAds>().ShowAd((isSuccess) => {
-            Camera.main.GetComponent<MainGame>().playAgain();
-        }); 
+        Camera.main.GetComponent<MainGame>().playAgain();
     }
 
     public void Menu(){

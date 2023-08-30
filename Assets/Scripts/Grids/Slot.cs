@@ -42,9 +42,16 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
     }
 
     public void DropTile(GameObject tile) {
+        int childIndex = tile.GetComponent<Tile>().SiblingIndex;
+
         tile.transform.SetParent(transform, false);
         tile.transform.localPosition = Vector3.zero;
         tile.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
+
+        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
+            GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().ReplaceTileToMaintainGridPosition(tile, childIndex);
+        }
+
         tile.GetComponent<Tile>().PlacedInSlot = true;
         SoundManager.PlayClipByName(AudioClipName.TilePlaced);
         NumberGrid.tilePlaced();

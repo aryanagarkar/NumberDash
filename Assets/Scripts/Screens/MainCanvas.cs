@@ -11,7 +11,7 @@ public class MainCanvas : MonoBehaviour
     {
         numberGrid = GameObject.FindWithTag("NumberGrid");
         memoryTimer = gameObject.AddComponent<Timer>();
-        memoryTimer.Duration = 10;
+        memoryTimer.Duration = 5;
         GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().GameSetUp();
         if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Original){
             GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().StartGame();

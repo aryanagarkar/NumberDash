@@ -57,4 +57,10 @@ public class NumberGrid : MonoBehaviour
             SoundManager.PlayClipByName(AudioClipName.Swoosh);
         }
     }
+
+    public void ReplaceTileToMaintainGridPosition(GameObject tile, int tileChildIndex){
+        GameObject container = Instantiate(GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().Container);
+        container.transform.SetParent(transform);
+        container.transform.SetSiblingIndex(tileChildIndex);
+    }
 }
