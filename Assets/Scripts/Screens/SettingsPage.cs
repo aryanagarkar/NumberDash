@@ -4,68 +4,124 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Manages the settings page's functionalities.
+/// Allows user to adjust their settings for the game session.
+/// </summary>
+
 public class SettingsPage : MonoBehaviour
 {
    [SerializeField]
-   Slider volumeSlider; 
+   Slider volumeSlider;  // Slider to control the volume level.
 
    [SerializeField]
-   TextMeshProUGUI volumeValueText; 
+   TextMeshProUGUI volumeValueText;  // Text display of the current volume value.
 
    [SerializeField]
-   GameObject avatarPanel; 
+   GameObject avatarPanel;  // The main panel for user avatar selection.
 
+   // Panel containing individual avatar images.
    GameObject avatarImagesPanel;
 
-   public void Start(){
+   /// <summary>
+   /// Initializes the avatar selection and volume settings on start.
+   /// </summary>
+
+   public void Start()
+   {
       avatarImagesPanel = avatarPanel.transform.GetChild(1).gameObject;
       SetSelectedAvatar();
       SetVolumeSlider();
    }
 
-   public void OnSliderMove(){
-    volumeValueText.text = (volumeSlider.value * 100).ToString("0.0") + "%";
+   /// <summary>
+   /// Updates the displayed volume value as the slider is moved.
+   /// </summary>
+
+   public void OnSliderMove()
+   {
+      volumeValueText.text = (volumeSlider.value * 100).ToString("0.0") + "%";
    }
 
-   public void SetVolumeSlider(){
-      if(PlayerPrefs.HasKey("VolumeValue")){
+   /// <summary>
+   /// Sets the initial value and display of the volume slider based on saved preferences.
+   /// Sets to default if saved preferences are not found.
+   /// </summary>
+
+   public void SetVolumeSlider()
+   {
+      if (PlayerPrefs.HasKey("VolumeValue"))
+      {
          float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
          updateVolumeSlider(volumeValue, (volumeValue * 100).ToString("0.0") + "%");
-      } else {
+      }
+      else
+      {
          updateVolumeSlider(0.4f, "40%");
       }
    }
 
-   public void SetSelectedAvatar(){
+   /// <summary>
+   /// Sets the initial avatar selection based on saved preferences highlights it.
+   /// </summary>
+
+   public void SetSelectedAvatar()
+   {
       string avatarName = "PB";
-      if(PlayerPrefs.HasKey("Avatar")){
+      if (PlayerPrefs.HasKey("Avatar"))
+      {
          avatarName = PlayerPrefs.GetString("Avatar");
       }
 
-      foreach (Transform child in avatarImagesPanel.transform) {
-         if (child.gameObject.name == avatarName) {
+      foreach (Transform child in avatarImagesPanel.transform)
+      {
+         if (child.gameObject.name == avatarName)
+         {
             child.GetComponent<Player>().ChangeSelection(true);
-         } else {
+         }
+         else
+         {
             child.GetComponent<Player>().ChangeSelection(false);
          }
       }
    }
 
-   public void PlayerAvatarSelected(string name){
-      foreach (Transform child in avatarImagesPanel.transform) {
-         if (child.gameObject.name != name) {
+   /// <summary>
+   /// Updates the avatar selection state when a new avatar is chosen.
+   /// </summary>
+   /// <param name="name">The name of the selected avatar.</param>
+
+   public void PlayerAvatarSelected(string name)
+   {
+      foreach (Transform child in avatarImagesPanel.transform)
+      {
+         if (child.gameObject.name != name)
+         {
             child.GetComponent<Player>().ChangeSelection(false);
          }
       }
    }
 
-   public void BackButtonClicked(){
+   /// <summary>
+   /// On leaving the settings page by pressing the back button,
+   /// save the volume setting and adjust the global audio volume.
+   /// </summary>
+
+   public void BackButtonClicked()
+   {
       float volumeValue = volumeSlider.value;
       PlayerPrefs.SetFloat("VolumeValue", volumeValue);
       AudioListener.volume = volumeValue;
    }
 
-   private void updateVolumeSlider(float value, string text) {
+   /// <summary>
+   /// Private helper method to update the volume slider's value and displayed text.
+   /// </summary>
+   /// <param name="value">The volume value to set the slider to.</param>
+   /// <param name="text">The current volume level text to display.</param>
+
+   private void updateVolumeSlider(float value, string text)
+   {
       volumeSlider.value = value;
       volumeValueText.text = text;
    }

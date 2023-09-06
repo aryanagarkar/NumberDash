@@ -5,12 +5,12 @@ using UnityEngine;
 public class ScoreMessage : MonoBehaviour
 {
     public void GoToMainMenu(){
-        SoundManager.Stop();
+        SoundManager.StopClip();
         Camera.main.GetComponent<MainGame>().GoToStartScreen();
     }
 
     public void PlayAgain(){
-        SoundManager.Stop();
+        SoundManager.StopClip();
         Camera.main.GetComponent<MainGame>().playAgain(); 
     }
 }

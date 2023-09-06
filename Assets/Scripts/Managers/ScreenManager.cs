@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Methods for scene transitions and instantiation of UI elements.
+/// Uses the Singleton pattern to ensure only one instance of SoundManager exists.
+/// </summary>
+
 public class ScreenManager : MonoBehaviour
 {
-    private static ScreenManager instance = null;
-
+    private static ScreenManager instance = null; // Singleton instance
+    
+    // UI elements 
     GameObject levelPanel;
     GameObject typeOfGamePanel;
     GameObject settings;
@@ -14,6 +20,12 @@ public class ScreenManager : MonoBehaviour
     GameObject characterPanel;
     GameObject gameOver;
     GameObject scoreMessage;
+
+    /// <summary>
+    /// Retrieves the singleton instance of SoundManager. 
+    /// If it doesn't exist, a new instance is created.
+    /// <returns>Current soundManager instance</returns>
+    /// </summary>
 
     public static ScreenManager GetInstance()
     {
@@ -24,19 +36,25 @@ public class ScreenManager : MonoBehaviour
         return instance;
     }
 
+    /// <summary>
+    /// Initializes the ScreenManager on game start and ensures only one instance exists.
+    /// Loads UI prefabs.
+    /// </summary>
     void Awake()
     {
+        // Singleton setup
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Keep active for entire game lifetime
         }
         else if (instance != this)
         {
-            Destroy(this.gameObject);
+            Destroy(this.gameObject); // Destroy extra instances
             return;
         }
 
+        // Load UI prefabs from Resources
         levelPanel = Resources.Load<GameObject>("Prefabs/Canvases/LevelPanel");
         typeOfGamePanel = Resources.Load<GameObject>("Prefabs/Canvases/TypeOfGamePanel");
         settings = Resources.Load<GameObject>("Prefabs/Canvases/Settings");
@@ -46,10 +64,21 @@ public class ScreenManager : MonoBehaviour
         scoreMessage = Resources.Load<GameObject>("Prefabs/Canvases/ScoreMessage");
     }
 
+    /// <summary>
+    /// Loads a new scene based on the given scene name.
+    /// </summary>
+    /// <param name="name">The name of the scene to load.</param>
+
     public void GoToScene(SceneName name)
     {
         SceneManager.LoadScene(name.ToString());
     }
+
+    /// <summary>
+    /// Instantiates the specified UI element, with the specified parent.
+    /// </summary>
+    /// <param name="name">The name of the UI element to instantiate.</param>
+    /// <param name="parent">The transform to be set as the parent of the instantiated object.</param>
 
     public void InstantiateScreen(UIElementName name, Transform parent)
     {
