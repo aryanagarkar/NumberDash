@@ -23,7 +23,7 @@ public class MainGame : MonoBehaviour
     }
 
     public void help(){
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.InstructionsPage, GameObject.FindWithTag("MainCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.InstructionsPage, GameObject.FindWithTag("MainCanvas").transform);
     }
 
     public void GoToStartScreen(){
@@ -58,7 +58,7 @@ public class MainGame : MonoBehaviour
 
     private void UpdateGameOverSettings(){
         GameObject scoreboard = GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject;
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.GameOver, GameObject.FindWithTag("MainCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.GameOver, GameObject.FindWithTag("MainCanvas").transform);
         GameObject.FindWithTag("GameOverCanvas").GetComponent<GameOverCanvas>().updateTextandPlaySound(gameOverText, gameOverClipName);
         switch(gameOverStatus){
             case GameStatus.Tied:
@@ -74,7 +74,7 @@ public class MainGame : MonoBehaviour
     }
 
     public void DisplayScoreMessage(){
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.ScoreMessage, GameObject.FindWithTag("MainCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.ScoreMessage, GameObject.FindWithTag("MainCanvas").transform);
         GameObject.FindWithTag("MainCanvas").transform.Find("ScoreBoard").gameObject.GetComponent<Scoreboard>().SetScoreMessage();
     }
 }

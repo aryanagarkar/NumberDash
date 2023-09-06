@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameType type;
+    public static GameVariations type;
     public static Level level;
     void Awake()
     {
         LoadPlayerPrefValues();
     }
 
-    public GameType Type {
+    public GameVariations Type {
         get { return type; }
     }
 
@@ -35,19 +35,19 @@ public class GameManager : MonoBehaviour
     }
 
     public void OriginalPlayClicked(){
-        type = GameType.Original;
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.LevelPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+        type = GameVariations.Original;
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.LevelPanel, GameObject.FindWithTag("GameStartCanvas").transform);
     }
     
     public void LevelButtonClicked(Level levelName)
     {
         level = levelName;
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
     }
 
     public void MemoryPlayClicked()
     {
-        type = GameType.Memory;
-        ScreenManager.GetInstance().InstantiateScreen(CanvasName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+        type = GameVariations.Memory;
+        ScreenManager.GetInstance().InstantiateScreen(UIElementName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
     }
 }

@@ -6,15 +6,15 @@ using UnityEngine;
 public class GameStartCanvas : MonoBehaviour
 {
    public void play(){
-      ScreenManager.GetInstance().InstantiateScreen(CanvasName.TypeOfGamePanel, transform);
+      ScreenManager.GetInstance().InstantiateScreen(UIElementName.TypeOfGamePanel, transform);
    }
 
    public void goToOptionsMenu(){
-       ScreenManager.GetInstance().InstantiateScreen(CanvasName.Settings, transform);
+       ScreenManager.GetInstance().InstantiateScreen(UIElementName.Settings, transform);
    }
 
    public void goTohowToPage(){
-       ScreenManager.GetInstance().InstantiateScreen(CanvasName.InstructionsPage, transform);
+       ScreenManager.GetInstance().InstantiateScreen(UIElementName.InstructionsPage, transform);
    }
 
    public void Quit(){

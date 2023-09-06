@@ -13,10 +13,10 @@ public class MainCanvas : MonoBehaviour
         memoryTimer = gameObject.AddComponent<Timer>();
         memoryTimer.Duration = 5;
         GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().GameSetUp();
-        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Original){
+        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameVariations.Original){
             GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().StartGame();
         }
-        else if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
+        else if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameVariations.Memory){
             launchMemoryVersionDelay();
         }
     }

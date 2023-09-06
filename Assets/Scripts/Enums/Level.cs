@@ -1,5 +1,9 @@
+/// <summary>
+/// Represents the difficulty levels for the game.
+/// </summary>
+
 public enum Level
 {
-    Easy,
-    Medium
+    Easy,   // Beginner level.
+    Medium  // Intermediate level.
 }

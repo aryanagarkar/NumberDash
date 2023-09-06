@@ -51,29 +51,29 @@ public class ScreenManager : MonoBehaviour
         SceneManager.LoadScene(name.ToString());
     }
 
-    public void InstantiateScreen(CanvasName name, Transform parent)
+    public void InstantiateScreen(UIElementName name, Transform parent)
     {
         switch (name)
         {
-            case CanvasName.LevelPanel:
+            case UIElementName.LevelPanel:
                 Instantiate(levelPanel, parent);
                 break;
-            case CanvasName.TypeOfGamePanel:
+            case UIElementName.TypeOfGamePanel:
                 Instantiate(typeOfGamePanel, parent);
                 break;
-            case CanvasName.Settings:
+            case UIElementName.Settings:
                 Instantiate(settings, parent);
                 break;
-            case CanvasName.InstructionsPage:
+            case UIElementName.InstructionsPage:
                 Instantiate(instructionsPage, parent);
                 break;
-            case CanvasName.CharacterPanel:
+            case UIElementName.CharacterPanel:
                 Instantiate(characterPanel, parent);
                 break;
-            case CanvasName.GameOver:
+            case UIElementName.GameOver:
                 Instantiate(gameOver, parent);
                 break;
-            case CanvasName.ScoreMessage:
+            case UIElementName.ScoreMessage:
                 Instantiate(scoreMessage, parent);
                 break;
         }

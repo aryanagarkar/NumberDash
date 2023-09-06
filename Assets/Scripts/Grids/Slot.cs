@@ -48,7 +48,7 @@ public class Slot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerE
         tile.transform.localPosition = Vector3.zero;
         tile.GetComponent<RectTransform>().localScale = new Vector3(1.2f, 1.2f, 1.2f);
 
-        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameType.Memory){
+        if(GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().Type == GameVariations.Memory){
             GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().ReplaceTileToMaintainGridPosition(tile, childIndex);
         }
 
