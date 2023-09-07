@@ -11,7 +11,6 @@ public class NumberGrid : MonoBehaviour
     void Awake()
     {
         numberOfTilesNotPlacedYet = transform.childCount;
-        //Pick sprite for each tile
         tileNumbers = new Dictionary<GameObject, Sprite>();
         for(int i = 0; i < transform.childCount; i++){
             tileNumbers.Add(transform.GetChild(i).gameObject, GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().PickRandomSprite());

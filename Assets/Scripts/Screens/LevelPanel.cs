@@ -2,14 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the level selection panel and lets players choose a difficulty level for the game.
+/// </summary>
+
 public class LevelPanel : MonoBehaviour
 {
-    public void EasyLevelSelected(){
+    /// <summary>
+    /// Handles the action when the "Easy" level is selected.
+    /// Calls the GameManager to start the Easy level game.
+    /// Destroys this display.
+    /// </summary>
+
+    public void EasyLevelSelected()
+    {
         Destroy(gameObject);
         GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().LevelButtonClicked(Level.Easy);
     }
 
-    public void MediumLevelSelected(){
+    /// <summary>
+    /// Handles the action when the "Medium" level is selected.
+    /// Calls the GameManager to start the Medium level game.
+    /// Destroys this display.
+    /// </summary>
+
+    public void MediumLevelSelected()
+    {
         Destroy(gameObject);
         GameObject.FindWithTag("PersistentObject").GetComponent<GameManager>().LevelButtonClicked(Level.Medium);
     }
