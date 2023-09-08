@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a draggable tile which can be placed into slots.
+/// Handles drag, drop and click events for the tile.
+/// </summary>
+
 public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public static GameObject itemBeingDragged;
@@ -15,23 +20,33 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     Animator tileFlip;
 
-    // A sprite is assigned to a tile when it is clicked and this flag is set to true
+    // A sprite is assigned to a tile when it is clicked and this flag is set to true.
     // If the dragged tile is not dropped in a valid slot, this flag is reset.
     bool hasSprite = false;
 
-    // This flag is set to false when a tile is placed in a slot
+    // This flag is set to false when a tile is placed in a slot.
     bool placedInSlot = false;
     
     // This flag indicates that a player started to drag this tile. It is needed to ensure that events like
     // OnDrag and OnEndDrag do not take an action unless the drag was started.
     bool dragStarted = false;
+
+
     int number = 0;
+
+    /// <summary>
+    /// Gets the number value of the tile.
+    /// </summary>
 
     public int Number {
         get{
             return number;
         }
     }
+
+    /// <summary>
+    /// Gets or sets the value indicating whether the tile has been placed in a slot.
+    /// </summary>
 
     public bool PlacedInSlot {
         get{
@@ -44,8 +59,14 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     void Start(){
         tileFlip = GetComponent<Animator>();
+
+        // Gets the index of the tile in its parent container.
         siblingIndex = transform.GetSiblingIndex();
     }
+
+    /// <summary>
+    /// Gets the sibling index of the tile.
+    /// </summary>
 
     public int SiblingIndex {
         get{
@@ -54,6 +75,9 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     }
 
 
+    /// <summary>
+    /// Check if the tile is currently playing an animation.
+    /// </summary>
     bool AnimatorIsPlaying(){
         return tileFlip.GetCurrentAnimatorStateInfo(0).length >
                 tileFlip.GetCurrentAnimatorStateInfo(0).normalizedTime;
@@ -65,6 +89,7 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
         }
         if(!hasSprite || GetComponent<Image>().sprite == GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().BlankSprite) {
+            //Play flip animation and set sprite.
             tileFlip.enabled = true;
             tileFlip.Play("TileFlip", 0, 0f);
             SoundManager.PlayClipByName(AudioClipName.Swoosh);
@@ -82,7 +107,6 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         dragStarted = true;
 
         transform.SetAsLastSibling();
-    
         transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         itemBeingDragged = gameObject;
         startPosition = transform.position;
@@ -90,6 +114,9 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
+    /// <summary>
+    /// Sets the tile's sprite and number properties.
+    /// </summary>
     public void SetSprite (Sprite s) {
         GetComponent<Image>().sprite = s;
         string name = s.name;
@@ -127,24 +154,24 @@ public class Tile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
-    // This method checks if a tile can be moved, which checks
+    // This method checks if a tile can be moved, which checks:
     // 1. Is there an already opened tile that hasn't been placed in a slot, if yes, is it this tile?
     // 2. Has it been already placed in a slot?
     // 3. If not, is it the players turn? If it's computers turn, then the player is not allowed to move tiles.
     private bool IsMovable() {
-        // Check if an active game in progress, else don't allow to move
+        // Check if an active game in progress, else don't allow to move.
         if (!GameObject.FindWithTag("GameBoard").GetComponent<GameBoard>().ActiveGame) {
             return false;
         }
-        // Check if it's the user playing
+        // Check if it's the user playing.
         if (GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().CurrentPlayer == PlayerStatus.You) {
-            // Is the tile already in a slot - If yes, don't allow to move
+            // Is the tile already in a slot - If yes, don't allow to move.
             if (!placedInSlot) {
-                // If already opened, allow player to move it
+                // If already opened, allow player to move it.
                 if (hasSprite) {
                     return true;
                 } else {
-                    // Not in slot yet and is also not opened. Check if there is another opened tile that must be played first
+                    // Not in slot yet and is also not opened. Check if there is another opened tile that must be played first.
                     return !isThereAlreadyAnOpenTile();
                 }
             }

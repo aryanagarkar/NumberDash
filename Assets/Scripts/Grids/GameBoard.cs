@@ -5,15 +5,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
+/// <summary>
+/// Represents and manages the state and behavior of the game board.
+/// </summary>
+
 public class GameBoard : MonoBehaviour
 {
-    Dictionary<string, GameObject> emptySlots;
-    Dictionary<string, GameObject> occupiedSlots;
-    GameObject lastDroppedTile;
-    GameObject computersTileToPlace;
+     // Represents the board slots that are currently empty.
+    private Dictionary<string, GameObject> emptySlots;
+
+    // Represents board slots that are occupied.
+    private Dictionary<string, GameObject> occupiedSlots;
+
+    // Reference to the last tile that was placed on the board.
+    private GameObject lastDroppedTile;
+
+    // Tile that the computer intends to place on its turn.
+    private GameObject computersTileToPlace;
+
+    //Computer timer for dropping tile.
     Timer dropTimer;
-    Level selectedLevel;
-    bool activeGame = false;
+
+    // The selected game difficulty level.
+    private Level selectedLevel;
+
+    // Flag indicating whether the game is currently active.
+    private bool activeGame = false;
 
     void Awake()
     {
@@ -30,11 +47,20 @@ public class GameBoard : MonoBehaviour
         activeGame = true;
     }
 
+    /// <summary>
+    /// Gets the value indicating whether the game is active.
+    /// </summary>
+
     public bool ActiveGame {
         get {
             return activeGame;
         }
     }
+
+    /// <summary>
+    /// Handles the outcome after a player makes a move.
+    /// </summary>
+    /// <param name="slot">The slot where the player placed their tile.</param>
 
     public void SendPlayerEvent(GameObject slot) {
         highlightLatestPlayedTile(slot.transform.GetChild(0).gameObject);
@@ -60,12 +86,22 @@ public class GameBoard : MonoBehaviour
         } 
     }
 
+    /// <summary>
+    /// Plays the lost animation for the tiles causing the loss.
+    /// </summary>
+    /// <param name="current">The losing tile.</param>
+    /// <param name="neighbor">The neighboring tile to the losing one.</param>
+
     private void PlayLostAnimation(GameObject current, GameObject neighbor){
         current.GetComponent<Animator>().enabled = true;
         current.GetComponent<Animator>().Play("TileInLosingSlot", 0, 0f);
         neighbor.GetComponent<Animator>().enabled = true;
         neighbor.GetComponent<Animator>().Play("TileInLosingSlot", 0, 0f);
     }
+
+    /// <summary>
+    /// Executes the computer's turn logic.
+    /// </summary>
 
     public void PlayComputersTurn() {
         computersTileToPlace = transform.parent.GetComponent<MainCanvas>().GetTileToPlay();
@@ -79,6 +115,10 @@ public class GameBoard : MonoBehaviour
         Invoke("PlaceTile", duration);
     }
 
+    /// <summary>
+    /// Place tile in a valid slot for the computer's turn.
+    /// For the easy level, if there are fewer than four tiles left, pick a random slot.
+    /// </summary>
     public void PlaceTile(){
         GameObject validSlotToPlay = null;
         switch (selectedLevel)
@@ -99,6 +139,10 @@ public class GameBoard : MonoBehaviour
         validSlotToPlay.GetComponent<Slot>().DropTile(computersTileToPlace);
         
     }
+
+    /// <summary>
+    /// Get a valid slot for the tile.
+    /// </summary>
 
     private GameObject GetValidSlotForTile(GameObject tile){
         List<GameObject> validSlots = new List<GameObject>();
@@ -121,11 +165,19 @@ public class GameBoard : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Get a random slot for the tile.
+    /// </summary>
+
      private GameObject GetRandomSlot(GameObject tile){
         int index = Random.Range(0, emptySlots.Count - 1);
         return emptySlots.ElementAt(index).Value;
     }
-    
+
+    /// <summary>
+    /// Update lists for empty slots and occupied slots.
+    /// </summary>
+
     private void moveEmptySlotToOccupied(string slotKey) {
         GameObject removedObject;
         emptySlots.Remove(slotKey, out removedObject);
@@ -138,11 +190,9 @@ public class GameBoard : MonoBehaviour
         if (GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().GetHighlightedSpriteByName(highlightedSpriteName) != null) {
             latestTile.GetComponent<Image>().sprite = GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().GetHighlightedSpriteByName(highlightedSpriteName);
             // Reset the sprite for the last dropped tile back to normal
-            //latestTile.GetComponent<NicerOutline>().enabled = true;
             if(lastDroppedTile != null) {
                 string spritename = lastDroppedTile.GetComponent<Image>().sprite.name.Replace("H", "");
                 lastDroppedTile.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + spritename);
-                //lastDroppedTile.GetComponent<NicerOutline>().enabled = false;
             }
 
             // Update the lastDroppedTile 

@@ -5,9 +5,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Manages the turns and gameplay visuals for both the computer and the player.
+/// It handles the initiation, transition, and completion of turns, as well as provides
+/// specific UI settings and animations based on the current player's turn.
+/// </summary>
+
 public class TurnManager : MonoBehaviour
 {
     public static PlayerStatus currentPlayer;
+
+    // UI components to handle turn displays and animations.
     GameObject turnText;
     GameObject character;
     Animator turnTextAnimator;
@@ -18,7 +26,7 @@ public class TurnManager : MonoBehaviour
     Animator clockAnim;
     Animator characterAnimator;
     
-    
+    // UI components specific to the tutorial
     GameObject youPlayText;
     GameObject pickTileText;
     GameObject dropTileText;
@@ -26,11 +34,12 @@ public class TurnManager : MonoBehaviour
     GameObject pickTileAgainText;
     GameObject dropTileStrategyText;
 
+    //Whether to run the tutorial or not.
     bool runTutorial = false;
 
+     // Sprites and names representing the user and the computer.
     Sprite computerSprite;
     string computerName;
-
     Sprite playerSprite;
 
     public PlayerStatus CurrentPlayer {
@@ -76,17 +85,18 @@ public class TurnManager : MonoBehaviour
         characterImage.enabled = true;  
     }
 
-    // Functions to handle a game's lifecycle
+    /// <summary>
+    /// Starts the game and plays the first turn.
+    /// </summary>
 
-    /**
-    * A function to be called by GameBoard to start the game. This function
-    * picks a random first player and plays it's turn.
-    * If the tutorial Mode is on, it automatically picks the 'Player' as the first
-    * character to play
-    */
     public void StartGame() {
         PlayTurn(true);
     }
+
+    /// <summary>
+    /// Sets up the game.
+    /// Determines which player goes first and displays the appropriate character.
+    /// </summary>
 
      public void GameSetUp() {
         int currentPlayerIndex = Random.Range(1, 10) % 2;
@@ -98,14 +108,19 @@ public class TurnManager : MonoBehaviour
         SetCharacter();
     }
 
+    /// <summary>
+    /// Ends the game and resets relevant settings.
+    /// </summary>
+
     public void EndGame() {
         PlayerPrefs.SetInt("PlayTutorial", 0);
-        
-        // Just loading the ads in anticipation of playing it, if the user chooses to play more
         ResetAnimations();
     }
  
-    // Functions to handle turn changes
+    /// <summary>
+    /// Changes the turn to the next player.
+    /// </summary>
+
     public void ChangeTurn(){
         characterAnimator.enabled = true;
         characterAnimator.Play("FadeOut", 0, 0f);
@@ -114,65 +129,16 @@ public class TurnManager : MonoBehaviour
         } else {
             currentPlayer = PlayerStatus.Computer;
         }
+        //Delay for animation to complete before next turn.
         Invoke("PlayTurnDelay", 1);
     }
 
-    private void SetCharacter(){
-        if (currentPlayer == PlayerStatus.You) {
-            ActivatePlayerSpecificUISettings(); 
-        } else {
-            ActivateComputerSpecificUISettings();
-        }
-    }
-
-    private void PlayTurn(bool firstMoveOfTheGame){
-        SetCharacter();
-        if (currentPlayer == PlayerStatus.You) {
-            textComponent.text = "You Play First!";  
-        } else {
-            textComponent.text = computerName + " Plays First";
-            Invoke("PlayComputersTurnDelay", 1);
-        }
-        if(firstMoveOfTheGame) {
-            pickTileText.SetActive(runTutorial); 
-            turnText.SetActive(true);
-            turnTextAnimator.enabled = true;
-            turnTextAnimator.Play("TurnText", 0, 0f);
-        }
-    }
-
-    private void PlayComputersTurnDelay() {
-        GetComponent<GameBoard>().PlayComputersTurn();
-    }
-    
-    private void PlayTurnDelay() {
-        characterAnimator.Play("FadeIn", 0, 0f);
-        PlayTurn(false);
-    }
-
-    // Functions to reset/Change the visuals
-
-    private void ResetAnimations() {
-        clockAnim.enabled = false;
-    }
-
-    private void ActivateComputerSpecificUISettings() {
-        characterImage.sprite = computerSprite;
-        clock.SetActive(true);
-        clockAnim.enabled = true;
-    }
-
-    private void DeactivateComputerSpecificUISettings() {
-        clock.SetActive(false);
-        clockAnim.enabled = false;
-    }
-
-    private void ActivatePlayerSpecificUISettings() {
-        DeactivateComputerSpecificUISettings();
-        characterImage.sprite = playerSprite;
-    }
-
     // Events For Running Tutorial
+
+    /// <summary>
+    /// Handles the tutorial UI when a tile is picked up by the player.
+    /// Based on the current state of the tutorial, this function toggles relevant tutorial prompts.
+    /// </summary>
 
     public void TilePickedbyPlayer(){
         if (pickTileText.activeSelf) {
@@ -184,6 +150,11 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the tutorial UI changes when a tile is dropped by the player.
+    /// Based on the current state of the tutorial, this function toggles relevant tutorial prompts.
+    /// </summary>
+
     public void TileDropped(){
         if (dropTileText.activeSelf){
             dropTileText.SetActive(false);
@@ -194,5 +165,96 @@ public class TurnManager : MonoBehaviour
             pointAtcomputerText.SetActive(false);
             pickTileAgainText.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// Sets the appropriate character visuals based on the current player.
+    /// </summary>
+
+    private void SetCharacter(){
+        if (currentPlayer == PlayerStatus.You) {
+            ActivatePlayerSpecificUISettings(); 
+        } else {
+            ActivateComputerSpecificUISettings();
+        }
+    }
+
+    /// <summary>
+    /// Executes the current player's turn.
+    /// </summary>
+
+    private void PlayTurn(bool firstMoveOfTheGame){
+        SetCharacter();
+        
+        // Displays text for current player.
+        if (currentPlayer == PlayerStatus.You) {
+            textComponent.text = "You Play First!";  
+        } else {
+            textComponent.text = computerName + " Plays First";
+            Invoke("PlayComputersTurnDelay", 1);
+        }
+   
+        if(firstMoveOfTheGame) {
+            // Sets the tutorial text active based on whether the tutorial is needed.
+            pickTileText.SetActive(runTutorial); 
+
+            //Set turnText and related components.
+            turnText.SetActive(true);
+            turnTextAnimator.enabled = true;
+            turnTextAnimator.Play("TurnText", 0, 0f);
+        }
+    }
+
+    /// <summary>
+    /// Executes computer's turn after a delay.
+    /// </summary>
+
+    private void PlayComputersTurnDelay() {
+        GetComponent<GameBoard>().PlayComputersTurn();
+    }
+
+    /// <summary>
+    /// Executes user's turn after the character animation.
+    /// </summary>
+
+    private void PlayTurnDelay() {
+        characterAnimator.Play("FadeIn", 0, 0f);
+        PlayTurn(false);
+    }
+
+    /// <summary>
+    /// Reset animations.
+    /// </summary>
+
+    private void ResetAnimations() {
+        clockAnim.enabled = false;
+    }
+
+    /// <summary>
+    /// Display UI elements for the computer.
+    /// </summary>
+
+    private void ActivateComputerSpecificUISettings() {
+        characterImage.sprite = computerSprite;
+        clock.SetActive(true);
+        clockAnim.enabled = true;
+    }
+
+    /// <summary>
+    /// Hide UI elements for the computer.
+    /// </summary>
+
+    private void DeactivateComputerSpecificUISettings() {
+        clock.SetActive(false);
+        clockAnim.enabled = false;
+    }
+
+    /// <summary>
+    /// Display UI elements for the user.
+    /// </summary>
+
+    private void ActivatePlayerSpecificUISettings() {
+        DeactivateComputerSpecificUISettings();
+        characterImage.sprite = playerSprite;
     }
 }
