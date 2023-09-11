@@ -1,7 +1,20 @@
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
 Library/
 Logs/
 Packages/
 ProjectSettings/
 Temp/
 UserSettings/
-Build*/
+
+# Visual Studio Code
+.vscode/
+
+*.sln.docstates
+
+
