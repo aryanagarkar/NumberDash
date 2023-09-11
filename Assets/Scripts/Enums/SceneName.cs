@@ -2,8 +2,11 @@
 /// Represents the scenes in the game.
 /// </summary>
 
-public enum SceneName
+namespace HelperEnums
 {
-    GameStartScene,  // Initial scene.
-    MainGameBoard    // Main gameplay scene.
+    public enum SceneName
+    {
+        GameStartScene,  // Initial scene.
+        MainGameBoard    // Main gameplay scene.
+    }
 }

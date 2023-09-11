@@ -2,8 +2,11 @@
 /// Represents the difficulty levels for the game.
 /// </summary>
 
-public enum Level
+namespace HelperEnums
 {
-    Easy,   // Beginner level.
-    Medium  // Intermediate level.
+    public enum Level
+    {
+        Easy,   // Beginner level.
+        Medium  // Intermediate level.
+    }
 }

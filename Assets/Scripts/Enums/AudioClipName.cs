@@ -2,14 +2,17 @@
 /// Represents the audio clips used in the game.
 /// </summary>
 
-public enum AudioClipName
+namespace HelperEnums
 {
-    None,        // No audio clip.
-    PlayerLost,  // Audio for when the player loses.
-    PlayerWon,   // Audio for when the player wins.
-    Tied,        // Audio for a tie game outcome.
-    TilePlaced,  // Audio for tile placement.
-    ButtonClick, // Audio for button clicks.
-    Swoosh,      // 'Swoosh' sound effect
-    Alarm        // Alarm sound effect.
+    public enum AudioClipName
+    {
+        None,        // No audio clip.
+        PlayerLost,  // Audio for when the player loses.
+        PlayerWon,   // Audio for when the player wins.
+        Tied,        // Audio for a tie game outcome.
+        TilePlaced,  // Audio for tile placement.
+        ButtonClick, // Audio for button clicks.
+        Swoosh,      // 'Swoosh' sound effect
+        Alarm        // Alarm sound effect.
+    }
 }

@@ -2,8 +2,11 @@
 /// Represents the variations of the game.
 /// </summary>
 
-public enum GameVariations
+namespace HelperEnums
 {
-    Original,  // Original version of the game.
-    Memory     // Memory game variation.
+    public enum GameVariation
+    {
+        Original,  // Original version of the game.
+        Memory     // Memory game variation.
+    }
 }
