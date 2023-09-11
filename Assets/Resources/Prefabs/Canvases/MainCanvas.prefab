@@ -1477,9 +1477,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5584198750818587380, guid: 304c7630b17ea418b9bdafa1f8204ad1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6892938065706480190, guid: 304c7630b17ea418b9bdafa1f8204ad1, type: 3}
       propertyPath: m_Name
       value: ScoreBoard
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777639140221647153, guid: 304c7630b17ea418b9bdafa1f8204ad1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -140
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 304c7630b17ea418b9bdafa1f8204ad1, type: 3}
@@ -2411,30 +2419,30 @@ PrefabInstance:
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8234343595636686125}
+      objectReference: {fileID: 4580031813315750175}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 4580031813315750175}
+      objectReference: {fileID: 0}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ButtonClicked
       objectReference: {fileID: 0}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: playAgain
+      objectReference: {fileID: 0}
+    - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainGame, Assembly-CSharp
+      value: Button, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: Button, Assembly-CSharp
+      value: UIElements.MainGame, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2101636811041501290, guid: dbbc208120dac4cb9b17051bc1b19b53, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
