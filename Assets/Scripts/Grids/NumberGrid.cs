@@ -82,10 +82,7 @@ namespace Grids
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject tile = transform.GetChild(i).gameObject;
-                tile.GetComponent<Tile>().SetSprite(tileNumbers[transform.GetChild(i).gameObject]);
-                tile.GetComponent<Animator>().enabled = true;
-                tile.GetComponent<Animator>().Play("TileFlip", 0, 0f);
-                SoundManager.PlayClipByName(AudioClipName.Swoosh);
+                StartCoroutine(FlipTile(tile, true));
             }
         }
 
@@ -98,10 +95,27 @@ namespace Grids
             for (int i = 0; i < transform.childCount; i++)
             {
                 GameObject tile = transform.GetChild(i).gameObject;
+                StartCoroutine(FlipTile(tile, false));
+            }
+        }
+
+        private IEnumerator FlipTile(GameObject tile, bool faceUp)
+        {
+            Animator animator = tile.GetComponent<Animator>();
+            animator.enabled = true;
+            animator.Play("TileFlip", 0, 0f);
+            SoundManager.PlayClipByName(AudioClipName.Swoosh);
+
+            // Wait for half the duration of the flip animation before changing the sprite
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length / 2);
+
+            if (faceUp)
+            {
+                tile.GetComponent<Tile>().SetSprite(tileNumbers[tile]);
+            }
+            else
+            {
                 tile.GetComponent<Tile>().ResetSpriteToBlank();
-                tile.GetComponent<Animator>().enabled = true;
-                tile.GetComponent<Animator>().Play("TileFlip", 0, 0f);
-                SoundManager.PlayClipByName(AudioClipName.Swoosh);
             }
         }
     }

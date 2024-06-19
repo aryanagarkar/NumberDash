@@ -69,6 +69,15 @@ namespace Managers
         }
 
         /// <summary>
+        /// Sets the game variation type to "Memory" and opens the character display.
+        /// </summary>
+        public void MemoryPlayClicked()
+        {
+            type = GameVariation.Memory;
+            ScreenManager.GetInstance().InstantiateScreen(UIElementName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
+        }
+
+        /// <summary>
         /// Sets the game level and opens the character display.
         /// </summary>
         /// <param name="levelName">The selected game level.</param>
@@ -78,17 +87,5 @@ namespace Managers
             level = levelName;
             ScreenManager.GetInstance().InstantiateScreen(UIElementName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
         }
-
-        /// <summary>
-        /// Sets the game variation type to "Memory" and opens the character display.
-        /// </summary>
-
-        public void MemoryPlayClicked()
-        {
-            type = GameVariation.Memory;
-            ScreenManager.GetInstance().InstantiateScreen(UIElementName.CharacterPanel, GameObject.FindWithTag("GameStartCanvas").transform);
-        }
     }
-
-
 }

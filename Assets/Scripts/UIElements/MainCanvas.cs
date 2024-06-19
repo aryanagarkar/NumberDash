@@ -17,7 +17,8 @@ namespace UIElements
         // Reference to the NumberGrid gameobject
         GameObject numberGrid;
 
-        // Timer used for the memory version start delay where the tile are shown face-up for memorization.
+        // Timer(s) used for the memory version start delay where the tile are shown face-up for memorization.
+        Timer startDelay;
         Timer memoryTimer;
 
         void Awake()
@@ -25,9 +26,12 @@ namespace UIElements
             // Set up references
             numberGrid = GameObject.FindWithTag("NumberGrid");
 
-            // Initialize and configure the timer 
+            // Initialize and configure the timer(s) 
+            startDelay = gameObject.AddComponent<Timer>();
+            startDelay.Duration = 1;
+
             memoryTimer = gameObject.AddComponent<Timer>();
-            memoryTimer.Duration = 5;
+            memoryTimer.Duration = 3;
 
             // Set up the game board 
             GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().GameSetUp();
@@ -44,7 +48,7 @@ namespace UIElements
             }
             else if (gameManager.Type == GameVariation.Memory)
             {
-                launchMemoryVersionDelay();
+                startDelay.Run();
             }
         }
 
@@ -54,6 +58,12 @@ namespace UIElements
 
         void Update()
         {
+            if (startDelay.Finished)
+            {
+                startDelay.Stop();
+                launchMemoryVersionDelay();
+            }
+
             // If the memory timer has finished, stop the timer, flip the tiles face down again, and start the game.
             if (memoryTimer.Finished)
             {
@@ -70,8 +80,8 @@ namespace UIElements
         public void launchMemoryVersionDelay()
         {
             // Flip the tiles face up and start the delay timer.
-            GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().flipTilesFaceUp();
             memoryTimer.Run();
+            GameObject.FindWithTag("NumberGrid").GetComponent<NumberGrid>().flipTilesFaceUp();
         }
 
         /// <summary>

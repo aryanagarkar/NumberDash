@@ -36,13 +36,11 @@ namespace Grids
         // OnDrag and OnEndDrag do not take an action unless the drag was started.
         bool dragStarted = false;
 
-
         int number = 0;
 
         /// <summary>
         /// Gets the number value of the tile.
         /// </summary>
-
         public int Number
         {
             get
@@ -54,7 +52,6 @@ namespace Grids
         /// <summary>
         /// Gets or sets the value indicating whether the tile has been placed in a slot.
         /// </summary>
-
         public bool PlacedInSlot
         {
             get
@@ -64,6 +61,11 @@ namespace Grids
             set
             {
                 placedInSlot = value;
+                // Reset open tile state when placed in slot.
+                if (value)
+                {
+                    Tile.openTile = null;
+                }
             }
         }
 
@@ -111,7 +113,7 @@ namespace Grids
                 SoundManager.PlayClipByName(AudioClipName.Swoosh);
                 Sprite s = transform.parent.gameObject.GetComponent<NumberGrid>().GetSpriteForTile(gameObject);
                 SetSprite(s);
-                Tile.openTile = gameObject;
+                Tile.openTile = gameObject; // Set the currently opened tile to track.
                 GameObject.FindWithTag("GameBoard").GetComponent<TurnManager>().TilePickedbyPlayer();
             }
         }
@@ -147,6 +149,7 @@ namespace Grids
         public void ResetSpriteToBlank()
         {
             GetComponent<Image>().sprite = GameObject.FindWithTag("PersistentObject").GetComponent<AssetLoader>().BlankSprite;
+            hasSprite = false;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -174,11 +177,16 @@ namespace Grids
             else
             {
                 placedInSlot = true;
-                Tile.openTile = null;
+                openTile = null;
             }
 
             dragStarted = false;
             GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+
+        private bool isThereAlreadyAnOpenTile()
+        {
+            return Tile.openTile != null;
         }
 
         // This method checks if a tile can be moved, which checks:
@@ -198,24 +206,18 @@ namespace Grids
                 // Is the tile already in a slot - If yes, don't allow to move.
                 if (!placedInSlot)
                 {
-                    // If already opened, allow player to move it.
                     if (hasSprite)
                     {
                         return true;
                     }
                     else
                     {
-                        // Not in slot yet and is also not opened. Check if there is another opened tile that must be played first.
+                       // Not in slot yet and is also not opened. Check if there is another opened tile that must be played first.
                         return !isThereAlreadyAnOpenTile();
                     }
                 }
             }
             return false;
-        }
-
-        private bool isThereAlreadyAnOpenTile()
-        {
-            return Tile.openTile != null;
         }
     }
 }

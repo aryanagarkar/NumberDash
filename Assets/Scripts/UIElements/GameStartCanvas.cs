@@ -19,7 +19,7 @@ namespace UIElements
 
         public void play()
         {
-            ScreenManager.GetInstance().InstantiateScreen(UIElementName.LevelPanel, transform);
+            ScreenManager.GetInstance().InstantiateScreen(UIElementName.TypeOfGamePanel, transform);
         }
 
         /// <summary>
