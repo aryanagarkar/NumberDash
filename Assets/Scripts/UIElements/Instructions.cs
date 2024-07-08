@@ -41,7 +41,6 @@ namespace UIElements
         /// <summary>
         /// Navigates to the next page when the forward button is pressed.
         /// </summary>
-
         public void ForwardButtonPressed()
         {
             int nextPageIndex = currentPageIndex + 1;
@@ -57,7 +56,6 @@ namespace UIElements
         /// <summary>
         /// Navigates to the previous page when the back button is pressed.
         /// </summary>
-
         public void BackButtonPressed()
         {
             int previousPageIndex = currentPageIndex - 1;

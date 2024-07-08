@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 8890167167530302363, guid: e322b827492544d358f620321e520c63, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e322b827492544d358f620321e520c63, type: 3}
 --- !u!1 &676062654
