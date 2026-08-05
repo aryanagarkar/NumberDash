@@ -1,20 +1,41 @@
+# OS / editor junk
+.DS_Store
 *.swp
 *.*~
-project.lock.json
-.DS_Store
 *.pyc
 nupkg/
+project.lock.json
 
-Library/
-Logs/
-Packages/
-ProjectSettings/
-Temp/
-UserSettings/
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Uu]ser[Ss]ettings/
 
-# Visual Studio Code
+# IDE / generated solution files (Unity recreates these)
+*.csproj
+*.sln
+*.slnx
+*.csproj.user
+*.unityproj
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+.vs/
 .vscode/
 
-*.sln.docstates
-
-
+# Ads dependency resolver (generated/imported by Package Manager)
+Assets/MobileDependencyResolver/
+Assets/MobileDependencyResolver.meta
